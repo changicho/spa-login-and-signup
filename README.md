@@ -1,5 +1,7 @@
 # 멤버십 프로젝트 - 로그인과 회원가입 저장소
 
+[기획서 공유문서 링크](https://docs.google.com/presentation/d/1xvs24VWVJc2KhmHUoj1Rm88zvtzItzQuD-6vBuzkvA0/edit?usp=sharing)
+
 ## 미션설명
 
 이번미션은 HTML코드로 간단한 todo 웹서비스를 만드는 것이다. todo 웹서비스는 할일을 관리하는 웹서비스로 몇가지 상태를 가지고 있으며,
