@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <script src=""></script>
-
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/main.css">
 
@@ -15,28 +13,37 @@
 </head>
 
 <body>
+  <div id="popup">
+
+  </div>
+
   <section>
     <h1>회원가입</h1>
   </section>
 
   <form action="">
-    <section class="container">
+    <section class="container" id="account_information">
       <div class="element">
-        <p>아이디</p>
-        <input type="text" required>
+        <p>아이디 (5자 이상 20자 이하)</p>
+        <div class="container_input">
+          <input type="text" name="id"  maxlength="20" required>
+        </div>
         <p class="check_message"></p>
       </div>
 
       <div class="element">
-        <p>비밀번호</p>
-        <input type="text" required>
+        <p>비밀번호 (8자 이상 16자 이하)</p>
+        <div class="container_input">
+          <input type="password" name="password"  maxlength="16" required>
+        </div>
         <p class="check_message"></p>
-
       </div>
 
       <div class="element">
         <p>비밀번호 재확인</p>
-        <input type="text" required>
+        <div class="container_input">
+          <input type="password" name="password_again" required>
+        </div>
         <p class="check_message"></p>
       </div>
     </section>
@@ -45,7 +52,10 @@
     <section class="container">
       <div class="element">
         <p>이름</p>
-        <input type="" value="" name="" required>
+        <div class="container_input">
+          <input type="" value="" name="" required>
+        </div>
+        <p class="check_message"></p>
       </div>
 
 
@@ -53,74 +63,90 @@
         <p>생년월일</p>
 
         <div class="content">
-          <input type="" value="" name="" placeholder="연" maxlength="4" required>
+          <div class="container_input">
+            <input type="" value="" name="" placeholder="연" maxlength="4" required>
+          </div>
 
-          <select placeholder="월" required>
-            <option value="" selected disabled hidden>월</option>
-            <option value="1">1월</option>
-            <option value="2">2월</option>
-            <option value="2">2월</option>
-            <option value="3">3월</option>
-            <option value="4">4월</option>
-            <option value="5">5월</option>
-            <option value="6">6월</option>
-            <option value="7">7월</option>
-            <option value="8">8월</option>
-            <option value="9">9월</option>
-            <option value="10">10월</option>
-            <option value="11">11월</option>
-            <option value="12">12월</option>
-          </select>
 
-          <input type="" value="" name="" placeholder="일" maxlength="4" required>
+          <div class="container_input">
+            <select placeholder="월" required>
+              <option value="" selected disabled hidden>월</option>
+              <option value="1">1월</option>
+              <option value="2">2월</option>
+              <option value="2">2월</option>
+              <option value="3">3월</option>
+              <option value="4">4월</option>
+              <option value="5">5월</option>
+              <option value="6">6월</option>
+              <option value="7">7월</option>
+              <option value="8">8월</option>
+              <option value="9">9월</option>
+              <option value="10">10월</option>
+              <option value="11">11월</option>
+              <option value="12">12월</option>
+            </select>
+          </div>
+
+
+          <div class="container_input">
+            <input type="" value="" name="" placeholder="일" maxlength="4" required>
+          </div>
         </div>
-
         <p class="check_message"></p>
       </div>
 
       <div class="element">
         <p>성별</p>
-        <select required>
-          <option value="" selected disabled hidden>성별</option>
-          <option value="male">남</option>
-          <option value="female">여</option>
-        </select>
+        <div class="container_input">
+          <select required>
+            <option value="" selected disabled hidden>성별</option>
+            <option value="male">남</option>
+            <option value="female">여</option>
+          </select>
+        </div>
+        <p class="check_message"></p>
       </div>
 
 
       <div class="element">
         <p>이메일</p>
-        <input type="" value="" name="" required>
+        <div class="container_input">
+          <input type="" value="" name="" required>
+        </div>
         <p class="check_message"></p>
       </div>
 
 
       <div class="element">
         <p>휴대전화</p>
-        <input type="" value="" name="" maxlength="13" required>
+        <div class="container_input">
+          <input type="" value="" name="" maxlength="13" required>
+        </div>
         <p class="check_message"></p>
       </div>
 
 
       <div class="element">
         <p>관심사</p>
-        <div class="interest">
+        <div class="interest container_input">
           <input type="" value="" name="" required>
         </div>
         <p class="check_message"></p>
       </div>
     </section>
 
-    <section class="">
+    <section class="section_button">
       <p><span>약관에 동의합니다</span> <input type="checkbox"></p>
-      <div class="container_button">
+      <div class="container_button half">
         <button type="reset">초기화</button>
         <button type="submit">가입하기</button>
       </div>
     </section>
   </form>
-
-
 </body>
+
+<!-- <script src="../js/signup_idpw.js"></script> -->
+<script src="../js/signup.js"></script>
+
 
 </html>
