@@ -4,7 +4,7 @@ data : [
   조건 만족시 메시지
   검사할 정규식
   기존에 사용하고 있는 id
-  id, password section tag
+  account_information section tag
 ] */
 class check_idpw_section {
   constructor() {
@@ -63,4 +63,96 @@ class check_idpw_section {
   }
 }
 
+/* 개인정보 검사 담당 class
+data : [
+  조건 불만족시 에러 메시지
+  조건 만족시 메시지
+  검사할 정규식
+  private_information section tag
+] */
+class check_private_section {
+  constructor() {
+    this.message_error = []
+    this.message_ok = []
+    this.section_private = document.getElementById('private_information')
+    this.message_tag = document.getElementById('private_information').children[1].children[2]
+
+    this.date_of_birth = new Date()
+    
+    this.year = 0
+    this.month = 0
+    this.day = 0
+
+    this.fillEventListener()
+  }
+  fillEventListener() {
+    this.checkYearOfBirth()
+    this.checkMonthOfBirth()
+    this.checkDateOfBirth()
+  }
+  checkYearOfBirth() {
+    const check_rule = /^[0-9]{4,4}$/
+    const input_year = document.getElementsByName('year')[0]
+
+    input_year.addEventListener('keyup', () => {
+      let year = input_year.value;
+
+      if (!check_rule.test(year)) {
+        this.showErrorMessage('출생년도를 정확히 입력해 주세요.')
+      } else {
+        if (new Date().getFullYear() - year < 15 || new Date().getFullYear() - year > 100) {
+          this.showErrorMessage('14세 미만, 99세 이상은 가입하실 수 없습니다.')
+        } else {
+          this.year = year
+          this.showCorrectMessage('올바른 출생년도입니다.')
+        }
+      }
+
+    })
+  }
+  checkMonthOfBirth() {
+    const input_month = document.getElementsByName('month')[0]
+
+    input_month.addEventListener('change', () => {
+      this.month = input_month.value
+    })
+  }
+  checkDateOfBirth() {
+    const input_day = document.getElementsByName('day')[0]
+
+    input_day.addEventListener('keyup', () => {
+      let year = this.year
+      let month = this.month
+      let day = input_day.value
+
+      if (month === 0 || year === 0) {
+        this.showErrorMessage('출생연도와 월에서 빠진 부분이 있는지 확인해주세요')
+        return
+      }
+      if (this.getDaysInMonth(month, year) < day) {
+        this.showErrorMessage('올바른 날짜를 입력해 주세요.')
+        return
+      }
+
+      this.showCorrectMessage('올바르게 입력하셨습니다.')
+      this.day = day
+    })
+
+
+  }
+  showErrorMessage(message) {
+    this.message_tag.style.color = 'red'
+    this.message_tag.innerText = message
+  }
+  showCorrectMessage(message) {
+    this.message_tag.style.color = 'green'
+    this.message_tag.innerText = message
+  }
+  getDaysInMonth(month, year) {
+    console.log(new Date(year, month, 0).getDate())
+    return new Date(year, month, 0).getDate()
+  }
+}
+
 let check_idpw = new check_idpw_section()
+let check_private = new check_private_section()

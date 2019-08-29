@@ -48,14 +48,13 @@
       </div>
     </section>
 
-
-    <section class="container">
+    <section class="container" id="private_information">
       <div class="element">
         <p>이름</p>
         <div class="container_input">
           <input type="" value="" name="" required>
         </div>
-        <p class="check_message"></p>
+        <p class="check_message hidden"></p>
       </div>
 
 
@@ -64,15 +63,13 @@
 
         <div class="content">
           <div class="container_input">
-            <input type="" value="" name="" placeholder="연" maxlength="4" required>
+            <input type="text" value="" name="year" placeholder="연" maxlength="4" required>
           </div>
 
-
           <div class="container_input">
-            <select placeholder="월" required>
-              <option value="" selected disabled hidden>월</option>
+            <select placeholder="월" name = "month" required>
+              <option value="0" selected disabled hidden>월</option>
               <option value="1">1월</option>
-              <option value="2">2월</option>
               <option value="2">2월</option>
               <option value="3">3월</option>
               <option value="4">4월</option>
@@ -89,7 +86,7 @@
 
 
           <div class="container_input">
-            <input type="" value="" name="" placeholder="일" maxlength="4" required>
+            <input type="" value="" name="day" placeholder="일" maxlength="4" required>
           </div>
         </div>
         <p class="check_message"></p>
