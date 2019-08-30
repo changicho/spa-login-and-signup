@@ -2,12 +2,70 @@
 data : [
   이미 가입된 아이디 목록
 ] */
-class class_data_from_database{
-  constructor(){
+class class_data_from_database {
+  constructor() {
     this.id_database = ['admin']
   }
 }
-data_from_database = new class_data_from_database()
+
+/* 각 요소들 통과 여부
+data : [
+  아이디, 비밀번호, 이름, 생년월일
+  성별, 이메일, 휴대전화, 관심사
+]
+value_of_data : boolean
+function : [
+  모든 요소 채워졌는지 검사
+  모든 요소 초기화
+]
+extra : 팝업 레이어에 뿌려주는 부분?
+*/
+class class_data_of_checked {
+  constructor() {
+    this.id = false
+    this.password = false
+    this.name = false
+    this.date_of_birth = false
+    this.gender = false
+    this.email = false
+    this.phone = false
+    this.interest = false
+  }
+  // 정보 제출 시 확인하는 부분
+  // return : boolean
+  checkAllFilled() {
+    if (this.id) {
+
+    }
+  }
+  // 초기화 버튼
+  clearAll() {
+    this.id = false
+    this.password = false
+    this.name = false
+    this.date_of_birth = false
+    this.gender = false
+    this.email = false
+    this.phone = false
+    this.interest = false
+
+    Array.from(document.querySelectorAll('.check_message')).reduce((previous, current) => {
+      current.innerText = ''
+    }, [])
+  }
+  showCheckedData(){
+    console.log(`
+id:    ${this.id}
+pw:    ${this.password}
+name:    ${this.name}
+date:    ${this.date_of_birth}
+gender:    ${this.gender}
+email:    ${this.email}
+phone:    ${this.phone}
+interest:    ${this.interest}
+    `)
+  }
+}
 
 /* id와 pw 검사 담당 class
 data : [
@@ -24,11 +82,11 @@ class class_check_account {
     this.message_ok = [
       '사용 가능한 아이디 입니다.', '사용 가능한 비밀번호 입니다.', '사용 가능한 비밀번호 입니다.'
     ]
-    this.check_rule = [/^[a-z0-9-_]{5,20}$/, /^[a-zA-z0-9~`!@#$%\^&*()-+=]{8,16}$/, /^[a-zA-z0-9~`!@#$%\^&*()-+=]{8,16}$/]
+    let rule_id = /^[a-z0-9-_]{5,20}$/
+    let rule_password = /^[a-zA-z0-9~`!@#$%\^&*()-+=]{8,16}$/
+    this.check_rule = [rule_id, rule_password, rule_password]
     this.section_account = document.getElementById('account_information')
 
-    console.log(document.getElementById('account_information'))
-    
     this.fillEventListener()
   }
   fillEventListener() {
@@ -40,9 +98,11 @@ class class_check_account {
         if (!this.check_rule[index].test(input_data)) {
           current.children[2].style.color = 'red'
           current.children[2].innerText = this.message_error[index]
+          data_of_checked.id = false
         } else {
           current.children[2].style.color = 'green'
           current.children[2].innerText = this.message_ok[index]
+          data_of_checked.id = true
         }
 
         if (index === 0) {
@@ -50,6 +110,7 @@ class class_check_account {
             if (cur === input_data) {
               current.children[2].style.color = 'red'
               current.children[2].innerText = '이미 사용중인 아이디 입니다.'
+              data_of_checked.id = false
             }
           }, 0)
         }
@@ -62,12 +123,14 @@ class class_check_account {
         let origin_password = this.section_account.children[1].children[1].children[0].value
         let reentered_password = this.section_account.children[2].children[1].children[0].value
 
-        if (reentered_password !== origin_password) {
+        if (reentered_password !== origin_password || origin_password === "") {
           this.section_account.children[2].children[2].style.color = 'red'
           this.section_account.children[2].children[2].innerText = "비밀번호가 일치하지 않습니다."
+          data_of_checked.password = false
         } else {
           this.section_account.children[2].children[2].style.color = 'green'
           this.section_account.children[2].children[2].innerText = "비밀번호가 일치합니다."
+          data_of_checked.password = true
         }
       })
     })
@@ -83,86 +146,182 @@ data : [
 ] */
 class class_check_private {
   constructor() {
-    this.message_error = []
-    this.message_ok = []
     this.section_private = document.getElementById('private_information')
-    this.message_tag = document.getElementById('private_information').children[1].children[2]
 
-    this.date_of_birth = new Date()
-    
-    this.year = 0
-    this.month = 0
-    this.day = 0
+    this.input_name = document.getElementsByName('name')[0]
+    this.select_gender = document.getElementsByName('gender')[0]
+    this.input_email = document.getElementsByName('email')[0]
+    this.input_phone = document.getElementsByName('phone')[0]
 
     this.fillEventListener()
   }
   fillEventListener() {
-    this.checkYearOfBirth()
-    this.checkMonthOfBirth()
-    this.checkDateOfBirth()
+    this.input_name.addEventListener('keyup', () => {
+      this.checkName()
+    })
+    this.select_gender.addEventListener('change', () => {
+      this.checkGender()
+    })
+    this.input_email.addEventListener('keyup', () => {
+      this.checkEmail()
+    })
+    this.input_phone.addEventListener('keyup', () => {
+      this.checkPhone()
+    })
+  }
+  checkName() {
+    let name = this.input_name.value;
+    if (name.length !== 0) {
+      data_of_checked.name = true
+    } else {
+      data_of_checked.name = false
+    }
+  }
+  checkGender() {
+    data_of_checked.gender = true
+  }
+  checkEmail() {
+    const rule_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+    const p_message = this.input_email.parentNode.parentNode.children[2]
+    let email = this.input_email.value
+    
+    
+    if(!rule_email.test(email)){
+      this.showErrorMessage(p_message, '이메일 주소를 다시 확인해주세요.')
+      data_of_checked.email = false
+    }else{
+      this.showCorrectMessage(p_message, '올바른 이메일 입니다.')
+      data_of_checked.email = true
+    }
+  }
+  checkPhone() {
+    const rule_phone = /^\d{3}-\d{3,4}-\d{4}$/
+    const p_message = this.input_phone.parentNode.parentNode.children[2]
+    let phone = this.input_phone.value
+
+    if(!rule_phone.test(phone)){
+      this.showErrorMessage(p_message, '형식에 맞지 않는 번호입니다.')
+      data_of_checked.phone = false
+    }else{
+      this.showCorrectMessage(p_message, '올바른 휴대전화 번호 입니다.')
+      data_of_checked.phone = true
+    }
+  }
+  showErrorMessage(tag, message) {
+    tag.style.color = 'red'
+    tag.innerText = message
+  }
+  showCorrectMessage(tag, message) {
+    tag.style.color = 'green'
+    tag.innerText = message
+  }
+}
+
+/* 생년월일 검사 담당 class
+data : [
+
+] */
+class class_check_birthdate {
+  constructor() {
+    this.p_message = document.getElementById('private_information').children[1].children[2]
+    this.year = 0
+    this.month = 0
+    this.day = 0
+
+    this.check_year = false
+    this.check_month = false
+    this.check_day = false
+
+    this.input_year = document.getElementsByName('year')[0]
+    this.select_month = document.getElementsByName('month')[0]
+    this.input_day = document.getElementsByName('day')[0]
+
+    this.fillEventListener()
+  }
+  fillEventListener() {
+    this.input_year.addEventListener('keyup', () => {
+      this.checkYearOfBirth()
+    })
+
+    this.select_month.addEventListener('change', () => {
+      this.checkMonthOfBirth()
+    })
+
+    this.input_day.addEventListener('keyup', () => {
+      this.checkDateOfBirth()
+    })
   }
   checkYearOfBirth() {
     const check_rule = /^[0-9]{4,4}$/
-    const input_year = document.getElementsByName('year')[0]
+    let year = this.input_year.value;
 
-    input_year.addEventListener('keyup', () => {
-      let year = input_year.value;
-
-      if (!check_rule.test(year)) {
-        this.showErrorMessage('출생년도를 정확히 입력해 주세요.')
+    if (!check_rule.test(year)) {
+      this.showErrorMessage('출생년도를 정확히 입력해 주세요.')
+      this.check_year = false
+    } else {
+      if (new Date().getFullYear() - year < 15 || new Date().getFullYear() - year > 100) {
+        this.showErrorMessage('14세 미만, 99세 이상은 가입하실 수 없습니다.')
+        this.check_year = false
       } else {
-        if (new Date().getFullYear() - year < 15 || new Date().getFullYear() - year > 100) {
-          this.showErrorMessage('14세 미만, 99세 이상은 가입하실 수 없습니다.')
-        } else {
-          this.year = year
-          this.showCorrectMessage('올바른 출생년도입니다.')
-        }
+        this.year = year
+        this.showCorrectMessage('')
+        this.check_year = true
       }
+    }
 
-    })
+    this.checkDateOfBirth()
   }
   checkMonthOfBirth() {
-    const input_month = document.getElementsByName('month')[0]
+    this.month = this.select_month.value
+    this.check_month = true
 
-    input_month.addEventListener('change', () => {
-      this.month = input_month.value
-    })
+    this.checkDateOfBirth()
   }
   checkDateOfBirth() {
-    const input_day = document.getElementsByName('day')[0]
+    let year = this.year
+    let month = this.month
+    let day = this.input_day.value
 
-    input_day.addEventListener('keyup', () => {
-      let year = this.year
-      let month = this.month
-      let day = input_day.value
-
-      if (month === 0 || year === 0) {
-        this.showErrorMessage('출생연도와 월에서 빠진 부분이 있는지 확인해주세요')
-        return
-      }
-      if (this.getDaysInMonth(month, year) < day) {
-        this.showErrorMessage('올바른 날짜를 입력해 주세요.')
-        return
-      }
-
-      this.showCorrectMessage('올바르게 입력하셨습니다.')
+    if (day === "") {
+      this.check_day = false
+    } else if (month === 0 || year === 0) {
+      this.showErrorMessage('출생연도와 월에서 빠진 부분이 있는지 확인해주세요')
+      this.check_day = false
+    } else if (this.getDaysInMonth(month, year) < day) {
+      this.showErrorMessage('올바른 날짜를 입력해 주세요.')
+      this.check_day = false
+    } else {
+      this.showCorrectMessage('')
       this.day = day
-    })
+      this.check_day = true
+    }
 
-
+    this.checkAll()
+  }
+  checkAll() {
+    if (this.check_year && this.check_month && this.check_day) {
+      data_of_checked.date_of_birth = true
+    } else {
+      data_of_checked.date_of_birth = false
+    }
   }
   showErrorMessage(message) {
-    this.message_tag.style.color = 'red'
-    this.message_tag.innerText = message
+    this.p_message.style.color = 'red'
+    this.p_message.innerText = message
   }
   showCorrectMessage(message) {
-    this.message_tag.style.color = 'green'
-    this.message_tag.innerText = message
+    this.p_message.style.color = 'green'
+    this.p_message.innerText = message
   }
   getDaysInMonth(month, year) {
     return new Date(year, month, 0).getDate()
   }
 }
 
+
+
+let data_from_database = new class_data_from_database()
+let data_of_checked = new class_data_of_checked()
 let check_account = new class_check_account()
 let check_private = new class_check_private()
+let check_birthdate = new class_check_birthdate()
