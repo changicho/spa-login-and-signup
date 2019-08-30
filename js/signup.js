@@ -53,7 +53,7 @@ class class_data_of_checked {
       current.innerText = ''
     }, [])
   }
-  showCheckedData(){
+  showCheckedData() {
     console.log(`
 id:    ${this.id}
 pw:    ${this.password}
@@ -184,12 +184,12 @@ class class_check_private {
     const rule_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
     const p_message = this.input_email.parentNode.parentNode.children[2]
     let email = this.input_email.value
-    
-    
-    if(!rule_email.test(email)){
+
+
+    if (!rule_email.test(email)) {
       this.showErrorMessage(p_message, '이메일 주소를 다시 확인해주세요.')
       data_of_checked.email = false
-    }else{
+    } else {
       this.showCorrectMessage(p_message, '올바른 이메일 입니다.')
       data_of_checked.email = true
     }
@@ -199,10 +199,10 @@ class class_check_private {
     const p_message = this.input_phone.parentNode.parentNode.children[2]
     let phone = this.input_phone.value
 
-    if(!rule_phone.test(phone)){
+    if (!rule_phone.test(phone)) {
       this.showErrorMessage(p_message, '형식에 맞지 않는 번호입니다.')
       data_of_checked.phone = false
-    }else{
+    } else {
       this.showCorrectMessage(p_message, '올바른 휴대전화 번호 입니다.')
       data_of_checked.phone = true
     }
@@ -318,10 +318,59 @@ class class_check_birthdate {
   }
 }
 
+class class_check_interest {
+  constructor() {
+    this.interest_list = ['안녕', '하세요', '반갑습니다.']
 
+    this.box = document.getElementById('interest')
+    this.input_interest = document.getElementById('input_interest')
+
+    this.render_interest()
+    this.fillEventLisnter()
+  }
+  fillEventLisnter() {
+    // backspace : 8
+    // , : 188
+    this.input_interest.addEventListener('keydown', (event) => {
+      // console.log('hello ' + event.keyCode)
+      if (event.keyCode === 8 && this.input_interest.value === '' && this.interest_list.length !== 0) {
+        this.popTag()
+      }
+      if (event.keyCode === 188 && this.input_interest.value !== '') {
+        this.pushTag(this.input_interest.value)
+        this.input_interest.value = ''
+      }
+    })
+    // , 입력이
+    this.input_interest.addEventListener('keyup', (event) => {
+      if (event.keyCode === 188) {
+        this.input_interest.value = ''
+      }
+    })
+  }
+  render_interest() {
+    this.interest_list.reduce((previous, current) => {
+      this.input_interest.insertAdjacentHTML('beforebegin', this.makeTitleToTag(current))
+    }, [])
+  }
+  pushTag(title) {
+    this.input_interest.insertAdjacentHTML('beforebegin', this.makeTitleToTag(title))
+    this.interest_list.push(title)
+  }
+  popTag() {
+    this.box.removeChild(this.box.childNodes[this.box.childNodes.length - 3])
+    this.input_interest.value = this.interest_list.pop()
+  }
+  makeTitleToTag(title) {
+    return `<div class="interest_tag"><p>${title}</p><button>❌</button></div>`
+  }
+}
 
 let data_from_database = new class_data_from_database()
+
+
 let data_of_checked = new class_data_of_checked()
-let check_account = new class_check_account()
-let check_private = new class_check_private()
-let check_birthdate = new class_check_birthdate()
+new class_check_interest()
+new class_check_account()
+new class_check_private()
+new class_check_birthdate()

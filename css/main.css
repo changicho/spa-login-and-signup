@@ -4,6 +4,7 @@ html {
 
   --main-theme-color: #49A6A6;
   --main-background-color: #dddddd;
+  --interest-tag-height: 30px;
 }
 
 * {
@@ -106,6 +107,50 @@ button {
   margin-right: 20px;
 }
 
-.hidden{
-  display:hidden;
+.hidden {
+  display: hidden;
+}
+
+
+
+#interest {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: #fff;
+}
+
+#interest .interest_tag {
+  height: var(--interest-tag-height);
+  margin: 5px;
+  padding: 0px 5px;
+  background-color: #faa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#interest .interest_tag p {
+  margin: 0px 5px;
+  margin-left: 20px;
+  /* display: inline-block; */
+}
+
+#interest .interest_tag button {
+  margin: 0px;
+  height: auto;
+  width: auto;
+  background-color: transparent;
+  border: none;
+}
+
+#interest #input_interest {
+  background-color: #aaf;
+}
+
+#interest input {
+  height: var(--interest-tag-height);
+  /* width: 100%; */
+  width:auto;
+  margin: 5px;
 }
