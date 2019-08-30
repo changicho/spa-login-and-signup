@@ -1,12 +1,22 @@
+/* 데이터베이스에서 읽어온 정보들
+data : [
+  이미 가입된 아이디 목록
+] */
+class class_data_from_database{
+  constructor(){
+    this.id_database = ['admin']
+  }
+}
+data_from_database = new class_data_from_database()
+
 /* id와 pw 검사 담당 class
 data : [
   조건 불만족시 에러 메시지
   조건 만족시 메시지
   검사할 정규식
-  기존에 사용하고 있는 id
   account_information section tag
 ] */
-class check_idpw_section {
+class class_check_account {
   constructor() {
     this.message_error = [
       '5글자 이상, 영 소문자, 숫자, 특수기호(_), (-)만 사용 가능합니다.', '8~16자의 영문 대, 소문자, 숫자, 특수문자로 구성해야합니다.', '8~16자의 영문 대, 소문자, 숫자, 특수문자로 구성해야합니다.'
@@ -15,9 +25,10 @@ class check_idpw_section {
       '사용 가능한 아이디 입니다.', '사용 가능한 비밀번호 입니다.', '사용 가능한 비밀번호 입니다.'
     ]
     this.check_rule = [/^[a-z0-9-_]{5,20}$/, /^[a-zA-z0-9~`!@#$%\^&*()-+=]{8,16}$/, /^[a-zA-z0-9~`!@#$%\^&*()-+=]{8,16}$/]
-    this.id_data = ['admin']
     this.section_account = document.getElementById('account_information')
 
+    console.log(document.getElementById('account_information'))
+    
     this.fillEventListener()
   }
   fillEventListener() {
@@ -35,7 +46,7 @@ class check_idpw_section {
         }
 
         if (index === 0) {
-          this.id_data.reduce((pre, cur) => {
+          data_from_database.id_database.reduce((pre, cur) => {
             if (cur === input_data) {
               current.children[2].style.color = 'red'
               current.children[2].innerText = '이미 사용중인 아이디 입니다.'
@@ -70,7 +81,7 @@ data : [
   검사할 정규식
   private_information section tag
 ] */
-class check_private_section {
+class class_check_private {
   constructor() {
     this.message_error = []
     this.message_ok = []
@@ -149,10 +160,9 @@ class check_private_section {
     this.message_tag.innerText = message
   }
   getDaysInMonth(month, year) {
-    console.log(new Date(year, month, 0).getDate())
     return new Date(year, month, 0).getDate()
   }
 }
 
-let check_idpw = new check_idpw_section()
-let check_private = new check_private_section()
+let check_account = new class_check_account()
+let check_private = new class_check_private()
