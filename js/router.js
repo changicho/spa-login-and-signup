@@ -51,10 +51,19 @@
       get('/view/signup.html')
         .then(res => renderHtml(res));
 
-      var script = document.createElement('script');
+      let last_tag_of_header = document.head.children[document.head.childElementCount - 1].outerHTML
+      let script = document.createElement('script');
+
       script.src = '/js/signup.js';
 
-      document.head.appendChild(script);
+      // 페이지 로딩마다 js파일이 로딩되지 않게 처리
+      if (last_tag_of_header.indexOf('<title>') !== -1) {
+        document.head.appendChild(script);
+      }
+
+      if (last_tag_of_header.indexOf(script.src) !== -1) {
+        document.head.appendChild(script);
+      }
 
     },
     otherwise(path) {
