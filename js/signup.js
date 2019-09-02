@@ -80,7 +80,7 @@ data : [
   검사할 정규식
   account_information section tag
 ] */
-class class_check_account {
+class class_account {
   constructor() {
     this.message_error = [
       '5글자 이상, 영 소문자, 숫자, 특수기호(_), (-)만 사용 가능합니다.', '8~16자의 영문 대, 소문자, 숫자, 특수문자로 구성해야합니다.', '8~16자의 영문 대, 소문자, 숫자, 특수문자로 구성해야합니다.'
@@ -150,7 +150,7 @@ data : [
   검사할 정규식
   private_information section tag
 ] */
-class class_check_private {
+class class_private {
   constructor() {
     this.section_private = document.getElementById('private_information')
 
@@ -227,7 +227,7 @@ class class_check_private {
 data : [
 
 ] */
-class class_check_birthdate {
+class class_birthdate {
   constructor() {
     this.p_message = document.getElementById('private_information').children[1].children[2]
     this.year = 0
@@ -329,10 +329,10 @@ data : [
   관심사 저장 list
 ]
 */
-class class_check_interest {
+class class_interest {
   constructor() {
-    this.interest_list = ['안녕', '하세요', '반갑습니다.']
-    // this.interest_count = this.interest_list.length
+    // this.interest_list = ['안녕', '하세요', '반갑습니다.']
+    this.interest_list = []
 
     this.box = document.getElementById('interest')
     this.input_interest = document.getElementById('input_interest')
@@ -343,7 +343,15 @@ class class_check_interest {
   fillEventLisnter() {
     // backspace : 8
     // , : 188
+    // enter : 13
+
     this.input_interest.addEventListener('keydown', (event) => {
+      // 엔터키 무효화
+      if (event.keyCode === 13) {
+        console.log('enter')
+        event.preventDefault()
+      }
+
       // case backspace
       if (event.keyCode === 8 && this.input_interest.value === '' && this.interest_list.length !== 0) {
         // 글자 지우는 event 이후에 값을 온전히 불러오기 위해
@@ -428,9 +436,85 @@ class class_check_interest {
   }
 }
 
+/* 약관 담당 class */
+class class_terms {
+  constructor() {
+    this.modal_terms = document.getElementById('terms')
+    this.button_show = document.getElementById("button_terms")
+    this.button_close = document.getElementById("close_terms")
+    this.button_agree = document.querySelector("#terms .agree")
+    this.checkbox = document.querySelector('#check_terms')
+
+    console.log(this.checkbox)
+
+    this.fillEventListener()
+  }
+  fillEventListener() {
+    this.button_show.onclick = () => {
+      this.modal_terms.style.display = "block"
+    }
+
+    this.button_close.onclick = () => {
+      this.modal_terms.style.display = "none";
+    }
+
+    this.button_agree.onclick = ()=>{
+      this.checkbox.checked = true
+      this.modal_terms.style.display = "none"
+    }
+
+    window.onclick = (event) => {
+      if (event.target == this.modal_terms) {
+        this.modal_terms.style.display = "none"
+      }
+    }
+
+    this.checkbox.onclick = (event) =>{
+      event.preventDefault()
+    }
+  }
+}
+
+/* 초기화 담당 class */
+class class_reset {
+  constructor() {
+    this.modal = document.getElementById('reset')
+    this.button_show = document.getElementById("button_reset")
+    this.button_close = document.querySelectorAll('#reset .close')
+    this.button_agree_reset = document.querySelector('#reset .agree')
+    
+    this.fillEventListener()
+  }
+  fillEventListener() {
+    this.button_show.onclick = () => {
+      this.modal.style.display = "block"
+    }
+
+    Array.from(this.button_close).reduce((previous, current)=>{
+      current.onclick = () => {
+        this.modal.style.display = "none"
+      }
+    },[])
+
+    this.button_agree_reset.onclick = ()=>{
+      console.log('agree')
+      this.modal.style.display = "none"
+    }
+
+    window.onclick = (event) => {
+      if (event.target == this.modal) {
+        this.modal.style.display = "none"
+      }
+    }
+  }
+}
+
+
 let data_from_database = new class_data_from_database()
 let data_of_checked = new class_data_of_checked()
-new class_check_interest()
-new class_check_account()
-new class_check_private()
-new class_check_birthdate()
+new class_interest()
+new class_account()
+new class_private()
+new class_birthdate()
+new class_terms()
+new class_reset()
