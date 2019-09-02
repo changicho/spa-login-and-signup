@@ -7,6 +7,8 @@
   const title = document.querySelector('title')
   const script = document.querySelector('.app-script')
 
+  let init_window = window
+
   function render(data) {
     console.log(data)
     // const json = JSON.parse(data);
@@ -47,23 +49,26 @@
         .then(res => renderHtml(res));
     },
     '/signup': function () {
+      window = init_window
       title.innerText = "회원가입 페이지"
       get('/view/signup.html')
         .then(res => renderHtml(res));
 
       let last_tag_of_header = document.head.children[document.head.childElementCount - 1].outerHTML
       let script = document.createElement('script');
-
+      
       script.src = '/js/signup.js';
+      // script.type = 'module'
 
+      document.head.appendChild(script);
       // 페이지 로딩마다 js파일이 로딩되지 않게 처리
-      if (last_tag_of_header.indexOf('<title>') !== -1) {
-        document.head.appendChild(script);
-      }
+      // if (last_tag_of_header.indexOf('<title>') !== -1) {
+      //   document.head.appendChild(script);
+      // }
 
-      if (last_tag_of_header.indexOf(script.src) !== -1) {
-        document.head.appendChild(script);
-      }
+      // if (last_tag_of_header.indexOf(script.src) !== -1) {
+      //   document.head.appendChild(script);
+      // }
 
     },
     otherwise(path) {
