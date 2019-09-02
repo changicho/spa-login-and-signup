@@ -21,6 +21,10 @@ body {
   width: 500px;
 }
 
+input, #virtual_dom{
+  font-size: 1em;
+}
+
 form input,
 form select {
   height: 50px;
@@ -162,7 +166,7 @@ button {
 .modal-content {
   width: 400px;
   background-color: white;
-  margin: 15% auto;
+  margin: 10% auto;
 }
 
 .modal-content .container_menu {
@@ -192,9 +196,13 @@ button {
   margin-right: 20px;
 }
 
-.modal-content .container_alert {
+.modal-content .alert_box {
   display: flex;
   justify-content: center;
   align-items: center;
   margin:20px 0px;
+}
+
+.modal-content .error_box {
+  margin:10px 40px;
 }
