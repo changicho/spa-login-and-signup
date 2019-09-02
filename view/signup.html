@@ -1,7 +1,3 @@
-<div id="popup">
-
-</div>
-
 <section>
   <h1>회원가입</h1>
 </section>
@@ -121,7 +117,7 @@
     <p id="button_terms"><span>약관에 동의합니다</span> <input type="checkbox" id="check_terms"></p>
     <div class="container_button half">
       <button type="button" id="button_reset">초기화</button>
-      <button type="button">가입하기</button>
+      <button type="button" id = "button_signin">가입하기</button>
     </div>
   </section>
 
@@ -193,6 +189,9 @@
           보존 이유 : 통신비밀보호법
           <br>
           보존 기간 : 3개월
+          <br>
+          <br>
+          <br>
         </div>
       </section>
       <div class="container_button">
@@ -208,12 +207,26 @@
         <button class="close">❌</button>
       </div>
 
-      <section class="container_alert">
+      <section class="alert_box">
         <p>초기화 하시겠습니까?</p>
       </section>
       <div class="container_button">
         <button class="agree" type="button">예</button>
         <button class="close" type="button">아니오</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="alert_empty" class="modal">
+    <div class="modal-content">
+      <div class="container_menu">
+        <p>빈 항목이 존재합니다.</p>
+        <button class="close">❌</button>
+      </div>
+      <section class="error_box">
+      </section>
+      <div class="container_button">
+        <button class="agree" type="button">확인</button>
       </div>
     </div>
   </div>
