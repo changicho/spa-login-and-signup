@@ -1,27 +1,14 @@
-/* 데이터베이스에서 읽어온 정보들
-data : [
-  이미 가입된 아이디 목록
-] */
-class class_data_from_database {
-  constructor() {
-    this.id_database = ['admin']
-  }
-}
-
-/* 각 요소들 통과 여부
+/* 회원가입에 필요한 데이터들
 data : [
   아이디, 비밀번호, 이름, 생년월일
   성별, 이메일, 휴대전화, 관심사
+  database에서 가져온 아이디 목록 (중복 검사용)
 ]
-value_of_data : boolean
-function : [
-  모든 요소 채워졌는지 검사
-  모든 요소 초기화
-]
-extra : 팝업 레이어에 뿌려주는 부분?
 */
-class class_data_of_checked {
+class class_data_signup {
   constructor() {
+    this.database_id_list = []
+
     this.checkbox_terms = document.querySelector("#check_terms")
     this.interest_list = []
     this.error_messages = {
@@ -34,6 +21,7 @@ class class_data_of_checked {
       phone: '연락처를 확인해주세요.',
       interest: '관심사를 확인해주세요.'
     }
+    this.readDataFromDatabase()
     this.initial()
   }
   initial() {
@@ -54,48 +42,31 @@ class class_data_of_checked {
     }, [])
   }
   // 정보 제출 시 확인하는 부분
-  // return : boolean
+  // return : list
   checkAllFilled() {
-    let is_passed = true
     let error_message = []
     if (!this.id) {
-      is_passed = false
-      console.log('아이디를 확인해주세요')
       error_message.push(this.error_messages.id)
     }
     if (!this.password) {
-      is_passed = false
-      console.log('비밀번호를 확인해주세요')
       error_message.push(this.error_messages.password)
     }
     if (!this.name) {
-      is_passed = false
-      console.log('이름을 입력해주세요')
       error_message.push(this.error_messages.name)
     }
     if (!this.date_of_birth) {
-      is_passed = false
-      console.log('생년월일을 확인해 주세요')
       error_message.push(this.error_messages.date_of_birth)
     }
     if (!this.gender) {
-      is_passed = false
-      console.log('성별을 입력해주세요')
       error_message.push(this.error_messages.gender)
     }
     if (!this.email) {
-      is_passed = false
-      console.log('이메일을 확인해주세요')
       error_message.push(this.error_messages.email)
     }
     if (!this.phone) {
-      is_passed = false
-      console.log('휴대전화를 확인해주세요')
       error_message.push(this.error_messages.phone)
     }
-    if (!this.interest && this.interest_count >= 3) {
-      is_passed = false
-      console.log('관심사를 확인해주세요')
+    if (!this.interest) {
       error_message.push(this.error_messages.interest)
     }
     return error_message
@@ -129,6 +100,9 @@ interest:    ${this.interest}
 interest_count:    ${this.interest_count}
     `)
   }
+  readDataFromDatabase() {
+    this.database_id_list = ['admin']
+  }
 }
 
 /* id와 pw 검사 담당 class
@@ -139,7 +113,9 @@ data : [
   account_information section tag
 ] */
 class class_account {
-  constructor() {
+  constructor(data) {
+    this.data = data
+
     this.message_error = [
       '5글자 이상, 영 소문자, 숫자, 특수기호(_), (-)만 사용 가능합니다.', '8~16자의 영문 대, 소문자, 숫자, 특수문자로 구성해야합니다.', '8~16자의 영문 대, 소문자, 숫자, 특수문자로 구성해야합니다.'
     ]
@@ -162,19 +138,19 @@ class class_account {
         if (!this.check_rule[index].test(input_data)) {
           current.children[2].style.color = 'red'
           current.children[2].innerText = this.message_error[index]
-          data_of_checked.id = false
+          this.data.id = false
         } else {
           current.children[2].style.color = 'green'
           current.children[2].innerText = this.message_ok[index]
-          data_of_checked.id = true
+          this.data.id = true
         }
 
         if (index === 0) {
-          data_from_database.id_database.reduce((pre, cur) => {
+          this.data.database_id_list.reduce((pre, cur) => {
             if (cur === input_data) {
               current.children[2].style.color = 'red'
               current.children[2].innerText = '이미 사용중인 아이디 입니다.'
-              data_of_checked.id = false
+              this.data.id = false
             }
           }, 0)
         }
@@ -190,11 +166,11 @@ class class_account {
         if (reentered_password !== origin_password || origin_password === "") {
           this.section_account.children[2].children[2].style.color = 'red'
           this.section_account.children[2].children[2].innerText = "비밀번호가 일치하지 않습니다."
-          data_of_checked.password = false
+          this.data.password = false
         } else {
           this.section_account.children[2].children[2].style.color = 'green'
           this.section_account.children[2].children[2].innerText = "비밀번호가 일치합니다."
-          data_of_checked.password = true
+          this.data.password = true
         }
       })
     })
@@ -209,7 +185,9 @@ data : [
   private_information section tag
 ] */
 class class_private {
-  constructor() {
+  constructor(data) {
+    this.data = data
+
     this.section_private = document.getElementById('private_information')
 
     this.input_name = document.getElementsByName('name')[0]
@@ -236,13 +214,13 @@ class class_private {
   checkName() {
     let name = this.input_name.value;
     if (name.length !== 0) {
-      data_of_checked.name = true
+      this.data.name = true
     } else {
-      data_of_checked.name = false
+      this.data.name = false
     }
   }
   checkGender() {
-    data_of_checked.gender = true
+    this.data.gender = true
   }
   checkEmail() {
     const rule_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
@@ -252,10 +230,10 @@ class class_private {
 
     if (!rule_email.test(email)) {
       this.showErrorMessage(p_message, '이메일 주소를 다시 확인해주세요.')
-      data_of_checked.email = false
+      this.data.email = false
     } else {
       this.showCorrectMessage(p_message, '올바른 이메일 입니다.')
-      data_of_checked.email = true
+      this.data.email = true
     }
   }
   checkPhone() {
@@ -265,10 +243,10 @@ class class_private {
 
     if (!rule_phone.test(phone)) {
       this.showErrorMessage(p_message, '형식에 맞지 않는 번호입니다.')
-      data_of_checked.phone = false
+      this.data.phone = false
     } else {
       this.showCorrectMessage(p_message, '올바른 휴대전화 번호 입니다.')
-      data_of_checked.phone = true
+      this.data.phone = true
     }
   }
   showErrorMessage(tag, message) {
@@ -286,7 +264,9 @@ data : [
 
 ] */
 class class_birthdate {
-  constructor() {
+  constructor(data) {
+    this.data = data
+
     this.p_message = document.getElementById('private_information').children[1].children[2]
     this.year = 0
     this.month = 0
@@ -364,9 +344,9 @@ class class_birthdate {
   }
   checkAll() {
     if (this.check_year && this.check_month && this.check_day) {
-      data_of_checked.date_of_birth = true
+      this.data.date_of_birth = true
     } else {
-      data_of_checked.date_of_birth = false
+      this.data.date_of_birth = false
     }
   }
   showErrorMessage(message) {
@@ -388,7 +368,9 @@ data : [
 ]
 */
 class class_interest {
-  constructor() {
+  constructor(data) {
+    this.data = data
+
     this.box = document.getElementById('interest')
     this.input_interest = document.getElementById('input_interest')
     this.p_message = this.box.parentNode.querySelector('.check_message')
@@ -402,12 +384,11 @@ class class_interest {
     this.input_interest.addEventListener('keydown', (event) => {
       // 엔터키 무효화
       if (event.keyCode === 13) {
-        console.log('enter')
         event.preventDefault()
       }
 
       // case backspace
-      if (event.keyCode === 8 && this.input_interest.value === '' && data_of_checked.interest_list.length !== 0) {
+      if (event.keyCode === 8 && this.input_interest.value === '' && this.data.interest_list.length !== 0) {
         // 글자 지우는 event 이후에 값을 온전히 불러오기 위해
         // eventQueue 에 할당
         setTimeout(() => {
@@ -446,13 +427,13 @@ class class_interest {
   fillCloseEvent(node) {
     let title_of_interest = node.children[0].innerHTML
 
-    let index_of_remove = data_of_checked.interest_list.indexOf(title_of_interest)
-    if (index_of_remove > -1) data_of_checked.interest_list.splice(index_of_remove, 1)
+    let index_of_remove = this.data.interest_list.indexOf(title_of_interest)
+    if (index_of_remove > -1) this.data.interest_list.splice(index_of_remove, 1)
     node.remove()
   }
   // 최초 view에 로딩
   render_interest() {
-    data_of_checked.interest_list.reduce((previous, current) => {
+    this.data.interest_list.reduce((previous, current) => {
       this.pushTag(current)
     }, [])
   }
@@ -465,15 +446,15 @@ class class_interest {
     new_interest_tag.children[1].addEventListener('click', () => {
       this.fillCloseEvent(new_interest_tag)
     })
-    data_of_checked.interest_list.push(title)
-    data_of_checked.interest_count += 1
+    this.data.interest_list.push(title)
+    this.data.interest_count += 1
     this.checkCountOfTag()
   }
   // 키보드 입력으로 list 제어
   popTag() {
     this.box.removeChild(this.box.childNodes[this.box.childNodes.length - 3])
-    this.input_interest.value = data_of_checked.interest_list.pop()
-    data_of_checked.interest_count -= 1
+    this.input_interest.value = this.data.interest_list.pop()
+    this.data.interest_count -= 1
     this.checkCountOfTag()
   }
   makeTitleToTag(title) {
@@ -487,16 +468,16 @@ class class_interest {
     // 글자 하나의 대략적인 크기 
     let input_width = document.getElementById('virtual_dom').offsetWidth + margin + "px";
     input_interest.style.width = input_width
-    console.log(input_width)
+
     document.getElementById('virtual_dom').remove()
   }
   checkCountOfTag() {
-    if (data_of_checked.interest_count < 3) {
+    if (this.data.interest_count < 3) {
       this.showErrorMessage('관심사를 3개이상 입력해주세요')
-      data_of_checked.interest = false
+      this.data.interest = false
     } else {
       this.showCorrectMessage('관심사가 3개 이상입니다.')
-      data_of_checked.interest = true
+      this.data.interest = true
     }
   }
   showErrorMessage(message) {
@@ -511,7 +492,9 @@ class class_interest {
 
 /* 약관 담당 class */
 class class_terms {
-  constructor() {
+  constructor(data) {
+    this.data = data
+
     this.modal_terms = document.getElementById('terms')
     this.button_show = document.getElementById("button_terms")
     this.button_close = document.getElementById("close_terms")
@@ -562,7 +545,9 @@ class class_terms {
 
 /* 초기화 담당 class */
 class class_reset {
-  constructor() {
+  constructor(data) {
+    this.data = data
+
     this.modal = document.getElementById('reset')
     this.button_show = document.getElementById("button_reset")
     this.button_close = document.querySelectorAll('#reset .close')
@@ -582,9 +567,7 @@ class class_reset {
     }, [])
 
     this.button_agree_reset.onclick = () => {
-      // console.log('agree')
-      data_of_checked.clearAll()
-      data_of_checked.showCheckedData()
+      this.data.clearAll()
       this.modal.style.display = "none"
     }
 
@@ -598,7 +581,9 @@ class class_reset {
 
 /* 가입하기 버튼 class */
 class class_alert_empty {
-  constructor() {
+  constructor(data) {
+    this.data = data
+
     this.button_show = document.getElementById("button_signin")
     this.modal = document.getElementById('alert_empty')
     this.button_close = document.querySelectorAll('#alert_empty .close')
@@ -609,8 +594,7 @@ class class_alert_empty {
   }
   fillEventListener() {
     this.button_show.onclick = () => {
-      console.log('submit')
-      let error_message = data_of_checked.checkAllFilled()
+      let error_message = this.data.checkAllFilled()
       if (error_message.length === 0) {
         window.location.href = '/'
       } else {
@@ -621,38 +605,45 @@ class class_alert_empty {
 
     Array.from(this.button_close).reduce((previous, current) => {
       current.onclick = () => {
-        this.modal.style.display = "none"
+        this.closeModal()
       }
     }, [])
 
     this.button_agree_reset.onclick = () => {
-      data_of_checked.clearAll()
-      data_of_checked.showCheckedData()
-      this.modal.style.display = "none"
+      this.closeModal()
     }
 
     window.onclick = (event) => {
       if (event.target == this.modal) {
-        this.modal.style.display = "none"
+        this.closeModal()
       }
     }
   }
   fillErrorMessage(alerts) {
+    let error_box = document.createElement('ul')
     alerts.reduce((previous, current) => {
-      let alert = document.createElement('p')
+      let alert = document.createElement('li')
       alert.innerText = current
-      this.alert_box.appendChild(alert)
+      error_box.appendChild(alert)
     }, [])
+    console.log(error_box)
+    this.alert_box.appendChild(error_box)
+  }
+  closeModal() {
+    this.modal.style.display = "none"
+    this.alert_box.querySelector('ul').remove()
   }
 }
 
-
-let data_from_database = new class_data_from_database()
-let data_of_checked = new class_data_of_checked()
-new class_interest()
-new class_account()
-new class_private()
-new class_birthdate()
-new class_terms()
-new class_reset()
-new class_alert_empty()
+class signup {
+  constructor() {
+    this.data = new class_data_signup()
+    new class_interest(this.data)
+    new class_account(this.data)
+    new class_private(this.data)
+    new class_birthdate(this.data)
+    new class_terms(this.data)
+    new class_reset(this.data)
+    new class_alert_empty(this.data)
+  }
+}

@@ -5,19 +5,11 @@
   const root = document.querySelector('.app-root');
   const navigation = document.getElementById('navigation');
   const title = document.querySelector('title')
-  const script = document.querySelector('.app-script')
 
-  let init_window = window
+  const script_signup = document.createElement('script')
+  script_signup.src = '/js/signup.js'
 
-  function render(data) {
-    console.log(data)
-    // const json = JSON.parse(data);
-    // root.innerHTML = `<h1>${json.title}</h1><p>${json.content}</p>`;
-  }
-
-  function renderJavaScript(data) {
-    script.innerHTML = `<script>${data}</script>`
-  }
+  document.head.appendChild(script_signup)
 
   function renderHtml(html) {
     root.innerHTML = html;
@@ -31,8 +23,8 @@
 
       req.onreadystatechange = function () {
         if (req.readyState === XMLHttpRequest.DONE) {
-          if (req.status === 200) resolve(req.response);
-          else reject(req.statusText);
+          if (req.status === 200) resolve(req.response)
+          else reject(req.statusText)
         }
       };
     });
@@ -46,29 +38,18 @@
     '/login': function () {
       title.innerText = "로그인 페이지"
       get('/view/login.html')
-        .then(res => renderHtml(res));
+        .then(res => renderHtml(res))
     },
-    '/signup': function () {
-      window = init_window
+    '/signup': () => {
+
       title.innerText = "회원가입 페이지"
       get('/view/signup.html')
-        .then(res => renderHtml(res));
-
-      let last_tag_of_header = document.head.children[document.head.childElementCount - 1].outerHTML
-      let script = document.createElement('script');
-      
-      script.src = '/js/signup.js';
-      // script.type = 'module'
-
-      document.head.appendChild(script);
-      // 페이지 로딩마다 js파일이 로딩되지 않게 처리
-      // if (last_tag_of_header.indexOf('<title>') !== -1) {
-      //   document.head.appendChild(script);
-      // }
-
-      // if (last_tag_of_header.indexOf(script.src) !== -1) {
-      //   document.head.appendChild(script);
-      // }
+        .then((res) => {
+          renderHtml(res)
+          setTimeout(() => {
+            new signup()
+          }, 100)
+        });
 
     },
     otherwise(path) {
@@ -108,16 +89,10 @@
 
     // path에 의한 AJAX 요청
     router(path);
+    // location.reload()
   });
 
   // 웹페이지가 처음 로딩되었을 때
   // 404 에러 및 경로로 직접 들어오는 부분 처리를 위한 pathname 사용
   router(window.location.pathname)
-
-  // DOMContentLoaded은 HTML과 script가 로드된 시점에 발생하는 이벤트로 load 이벤트보다 먼저 발생한다. (IE 9 이상 지원)
-  // window.addEventListener('DOMContentLoaded', router);
-
-  // 새로고침이 클릭되었을 때, 현 페이지(예를들어 loclahost:5004/service)가 서버에 요청된다.
-  // 서버측에는 이에 응답하는 기능이 추가되어야 한다.
-  // ex) app.get('/service', (req, res) => res.sendFile(path.join(__dirname + '/public/data/service.html')));
 }());
