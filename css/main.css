@@ -21,7 +21,8 @@ body {
   width: 500px;
 }
 
-input, #virtual_dom{
+input,
+#virtual_dom {
   font-size: 1em;
 }
 
@@ -118,18 +119,22 @@ button {
 
 #interest .interest_tag {
   height: var(--interest-tag-height);
+  padding: 5px;
   margin: 5px;
-  padding: 0px 5px;
   background-color: var(--interest-tag-color);
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 50px;
+}
+
+#interest {
+  padding: 5px 10px;
 }
 
 #interest .interest_tag p {
   margin: 0px 5px;
   margin-left: 20px;
-  /* display: inline-block; */
 }
 
 #interest .interest_tag button {
@@ -148,6 +153,7 @@ button {
   height: var(--interest-tag-height);
   width: 10px;
   margin: 5px;
+  height: 50px;
 }
 
 .modal {
@@ -200,9 +206,9 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin:20px 0px;
+  margin: 20px 0px;
 }
 
 .modal-content .error_box {
-  margin:10px 40px;
+  margin: 10px 40px;
 }
