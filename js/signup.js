@@ -22,15 +22,9 @@ extra : 팝업 레이어에 뿌려주는 부분?
 */
 class class_data_of_checked {
   constructor() {
-    // this.id = false
-    // this.password = false
-    // this.name = false
-    // this.date_of_birth = false
-    // this.gender = false
-    // this.email = false
-    // this.phone = false
-    // this.interest = false
-    // this.interest_count = 0
+    this.checkbox_terms = document.querySelector("#check_terms")
+    this.interest_list = []
+
     this.initial()
   }
   initial() {
@@ -43,20 +37,66 @@ class class_data_of_checked {
     this.phone = false
     this.interest = false
     this.interest_count = 0
+    this.interest_list = []
+
+    let interest_tags = document.querySelector('#interest').querySelectorAll('.interest_tag')
+    Array.from(interest_tags).reduce((previous, current) => {
+      current.remove()
+    }, [])
   }
   // 정보 제출 시 확인하는 부분
   // return : boolean
   checkAllFilled() {
-    if (this.id) {
-
+    let isPassed = true
+    if (!this.id) {
+      isPassed = false
+      console.log('아이디를 확인해주세요')
     }
+    if (!this.password) {
+      isPassed = false
+      console.log('비밀번호를 확인해주세요')
+    }
+    if (!this.name) {
+      isPassed = false
+      console.log('이름을 입력해주세요')
+    }
+    if (!this.date_of_birth) {
+      isPassed = false
+      console.log('생년월일을 확인해 주세요')
+    }
+    if (!this.gender) {
+      isPassed = false
+      console.log('성별을 입력해주세요')
+    }
+    if (!this.email) {
+      isPassed = false
+      console.log('이메일을 확인해주세요')
+    }
+    if (!this.phone) {
+      isPassed = false
+      console.log('휴대전화를 확인해주세요')
+    }
+    if (!this.interest && this.interest_count >= 3) {
+      isPassed = false
+      console.log('관심사를 확인해주세요')
+    }
+
+    return isPassed
   }
   // 초기화 버튼
   clearAll() {
     this.initial()
-
+    this.checkbox_terms.checked = false
     Array.from(document.querySelectorAll('.check_message')).reduce((previous, current) => {
       current.innerText = ''
+    }, [])
+
+    Array.from(document.querySelectorAll('input')).reduce((previous, current) => {
+      current.value = ''
+    }, [])
+
+    Array.from(document.querySelectorAll('select')).reduce((previous, current) => {
+      current.selectedIndex = 0
     }, [])
   }
   showCheckedData() {
@@ -69,6 +109,7 @@ gender:    ${this.gender}
 email:    ${this.email}
 phone:    ${this.phone}
 interest:    ${this.interest}
+interest_count:    ${this.interest_count}
     `)
   }
 }
@@ -332,19 +373,18 @@ data : [
 class class_interest {
   constructor() {
     // this.interest_list = ['안녕', '하세요', '반갑습니다.']
-    this.interest_list = []
+    // this.interest_list = []
 
     this.box = document.getElementById('interest')
     this.input_interest = document.getElementById('input_interest')
+    this.p_message = this.box.parentNode.querySelector('.check_message')
+
+    this.input_interest.style.width = '-webkit-fill-available'
 
     this.render_interest()
     this.fillEventLisnter()
   }
   fillEventLisnter() {
-    // backspace : 8
-    // , : 188
-    // enter : 13
-
     this.input_interest.addEventListener('keydown', (event) => {
       // 엔터키 무효화
       if (event.keyCode === 13) {
@@ -353,7 +393,7 @@ class class_interest {
       }
 
       // case backspace
-      if (event.keyCode === 8 && this.input_interest.value === '' && this.interest_list.length !== 0) {
+      if (event.keyCode === 8 && this.input_interest.value === '' && data_of_checked.interest_list.length !== 0) {
         // 글자 지우는 event 이후에 값을 온전히 불러오기 위해
         // eventQueue 에 할당
         setTimeout(() => {
@@ -369,8 +409,6 @@ class class_interest {
           this.input_interest.value = ''
         }
       }
-
-
       // change width
       setTimeout(() => {
         this.calculateInputWidth(this.input_interest)
@@ -394,13 +432,13 @@ class class_interest {
   fillCloseEvent(node) {
     let title_of_interest = node.children[0].innerHTML
 
-    let index_of_remove = this.interest_list.indexOf(title_of_interest)
-    if (index_of_remove > -1) this.interest_list.splice(index_of_remove, 1)
+    let index_of_remove = data_of_checked.interest_list.indexOf(title_of_interest)
+    if (index_of_remove > -1) data_of_checked.interest_list.splice(index_of_remove, 1)
     node.remove()
   }
   // 최초 view에 로딩
   render_interest() {
-    this.interest_list.reduce((previous, current) => {
+    data_of_checked.interest_list.reduce((previous, current) => {
       this.pushTag(current)
     }, [])
   }
@@ -413,26 +451,51 @@ class class_interest {
     new_interest_tag.children[1].addEventListener('click', () => {
       this.fillCloseEvent(new_interest_tag)
     })
-    this.interest_list.push(title)
+    data_of_checked.interest_list.push(title)
     data_of_checked.interest_count += 1
+    this.checkCountOfTag()
   }
   // 키보드 입력으로 list 제어
   popTag() {
     this.box.removeChild(this.box.childNodes[this.box.childNodes.length - 3])
-    this.input_interest.value = this.interest_list.pop()
+    this.input_interest.value = data_of_checked.interest_list.pop()
     data_of_checked.interest_count -= 1
+    this.checkCountOfTag()
   }
   makeTitleToTag(title) {
     return `<div class="interest_tag"><p>${title}</p><button>❌</button></div>`
   }
   calculateInputWidth(input_interest) {
-    let value = input_interest.value
+    let value = this.input_interest.value
+
+    // if (value === ',') {
+    //   this.input_interest.style.width = '-webkit-fill-available'
+    //   return
+    // }
+
     this.box.insertAdjacentHTML('afterbegin', '<div id="virtual_dom">' + value + '</div>');
 
     // 글자 하나의 대략적인 크기 
     let input_width = document.getElementById('virtual_dom').offsetWidth + 10 + "px";
     input_interest.style.width = input_width
     document.getElementById('virtual_dom').remove()
+  }
+  checkCountOfTag() {
+    if (data_of_checked.interest_count < 3) {
+      this.showErrorMessage('관심사를 3개이상 입력해주세요')
+      data_of_checked.interest = false
+    } else {
+      this.showCorrectMessage('관심사가 3개 이상입니다.')
+      data_of_checked.interest = true
+    }
+  }
+  showErrorMessage(message) {
+    this.p_message.style.color = 'red'
+    this.p_message.innerText = message
+  }
+  showCorrectMessage(message) {
+    this.p_message.style.color = 'green'
+    this.p_message.innerText = message
   }
 }
 
@@ -444,8 +507,7 @@ class class_terms {
     this.button_close = document.getElementById("close_terms")
     this.button_agree = document.querySelector("#terms .agree")
     this.checkbox = document.querySelector('#check_terms')
-
-    console.log(this.checkbox)
+    this.terms_box = this.modal_terms.querySelector('.terms')
 
     this.fillEventListener()
   }
@@ -458,8 +520,8 @@ class class_terms {
       this.modal_terms.style.display = "none";
     }
 
-    this.button_agree.onclick = ()=>{
-      this.checkbox.checked = true
+    this.button_agree.onclick = () => {
+      this.setAgree()
       this.modal_terms.style.display = "none"
     }
 
@@ -469,9 +531,22 @@ class class_terms {
       }
     }
 
-    this.checkbox.onclick = (event) =>{
+    this.checkbox.onclick = (event) => {
       event.preventDefault()
     }
+
+    this.terms_box.addEventListener('scroll', () => {
+      let scroll_position = this.terms_box.scrollTop + this.terms_box.clientHeight
+      let scroll_height = this.terms_box.scrollHeight
+
+      if (scroll_position === scroll_height) {
+        this.setAgree()
+        this.modal_terms.style.display = "none"
+      }
+    })
+  }
+  setAgree() {
+    this.checkbox.checked = true
   }
 }
 
@@ -482,7 +557,7 @@ class class_reset {
     this.button_show = document.getElementById("button_reset")
     this.button_close = document.querySelectorAll('#reset .close')
     this.button_agree_reset = document.querySelector('#reset .agree')
-    
+
     this.fillEventListener()
   }
   fillEventListener() {
@@ -490,14 +565,16 @@ class class_reset {
       this.modal.style.display = "block"
     }
 
-    Array.from(this.button_close).reduce((previous, current)=>{
+    Array.from(this.button_close).reduce((previous, current) => {
       current.onclick = () => {
         this.modal.style.display = "none"
       }
-    },[])
+    }, [])
 
-    this.button_agree_reset.onclick = ()=>{
-      console.log('agree')
+    this.button_agree_reset.onclick = () => {
+      // console.log('agree')
+      data_of_checked.clearAll()
+      data_of_checked.showCheckedData()
       this.modal.style.display = "none"
     }
 
