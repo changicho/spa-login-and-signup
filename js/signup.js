@@ -623,7 +623,7 @@ class class_alert_empty {
     let error_box = document.createElement('ul')
     alerts.reduce((previous, current) => {
       let alert = document.createElement('li')
-      alert.innerText = current
+      alert.innerHTML = `<p>${current}</p>`
       error_box.appendChild(alert)
     }, [])
     console.log(error_box)
