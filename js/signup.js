@@ -22,6 +22,18 @@ extra : 팝업 레이어에 뿌려주는 부분?
 */
 class class_data_of_checked {
   constructor() {
+    // this.id = false
+    // this.password = false
+    // this.name = false
+    // this.date_of_birth = false
+    // this.gender = false
+    // this.email = false
+    // this.phone = false
+    // this.interest = false
+    // this.interest_count = 0
+    this.initial()
+  }
+  initial() {
     this.id = false
     this.password = false
     this.name = false
@@ -30,6 +42,7 @@ class class_data_of_checked {
     this.email = false
     this.phone = false
     this.interest = false
+    this.interest_count = 0
   }
   // 정보 제출 시 확인하는 부분
   // return : boolean
@@ -40,14 +53,7 @@ class class_data_of_checked {
   }
   // 초기화 버튼
   clearAll() {
-    this.id = false
-    this.password = false
-    this.name = false
-    this.date_of_birth = false
-    this.gender = false
-    this.email = false
-    this.phone = false
-    this.interest = false
+    this.initial()
 
     Array.from(document.querySelectorAll('.check_message')).reduce((previous, current) => {
       current.innerText = ''
@@ -318,9 +324,15 @@ class class_check_birthdate {
   }
 }
 
+/* 관심사 담당 class
+data : [
+  관심사 저장 list
+]
+*/
 class class_check_interest {
   constructor() {
     this.interest_list = ['안녕', '하세요', '반갑습니다.']
+    // this.interest_count = this.interest_list.length
 
     this.box = document.getElementById('interest')
     this.input_interest = document.getElementById('input_interest')
@@ -332,43 +344,91 @@ class class_check_interest {
     // backspace : 8
     // , : 188
     this.input_interest.addEventListener('keydown', (event) => {
-      // console.log('hello ' + event.keyCode)
+      // case backspace
       if (event.keyCode === 8 && this.input_interest.value === '' && this.interest_list.length !== 0) {
-        this.popTag()
+        // 글자 지우는 event 이후에 값을 온전히 불러오기 위해
+        // eventQueue 에 할당
+        setTimeout(() => {
+          this.popTag()
+        }, 0)
       }
-      if (event.keyCode === 188 && this.input_interest.value !== '') {
-        this.pushTag(this.input_interest.value)
-        this.input_interest.value = ''
+      // case rest
+      if (event.keyCode === 188) {
+        if (this.input_interest.value !== '' && !this.checkOnlyRest(this.input_interest.value)) {
+          this.pushTag(this.input_interest.value)
+          this.input_interest.value = ''
+        } else {
+          this.input_interest.value = ''
+        }
       }
+
+
+      // change width
+      setTimeout(() => {
+        this.calculateInputWidth(this.input_interest)
+      }, 0)
     })
-    // , 입력이
+    // , keyup event
     this.input_interest.addEventListener('keyup', (event) => {
       if (event.keyCode === 188) {
         this.input_interest.value = ''
       }
     })
   }
+  checkOnlyRest(input_string) {
+    let check_string = input_string.replace(/,/gi, '')
+
+    if (check_string.length === 0) {
+      return true
+    }
+    return false
+  }
+  fillCloseEvent(node) {
+    let title_of_interest = node.children[0].innerHTML
+
+    let index_of_remove = this.interest_list.indexOf(title_of_interest)
+    if (index_of_remove > -1) this.interest_list.splice(index_of_remove, 1)
+    node.remove()
+  }
+  // 최초 view에 로딩
   render_interest() {
     this.interest_list.reduce((previous, current) => {
-      this.input_interest.insertAdjacentHTML('beforebegin', this.makeTitleToTag(current))
+      this.pushTag(current)
     }, [])
   }
+  // 관심사 태그를 추가
   pushTag(title) {
     this.input_interest.insertAdjacentHTML('beforebegin', this.makeTitleToTag(title))
+
+    let new_interest_tag = Array.from(document.querySelectorAll('.interest_tag')).pop()
+
+    new_interest_tag.children[1].addEventListener('click', () => {
+      this.fillCloseEvent(new_interest_tag)
+    })
     this.interest_list.push(title)
+    data_of_checked.interest_count += 1
   }
+  // 키보드 입력으로 list 제어
   popTag() {
     this.box.removeChild(this.box.childNodes[this.box.childNodes.length - 3])
     this.input_interest.value = this.interest_list.pop()
+    data_of_checked.interest_count -= 1
   }
   makeTitleToTag(title) {
     return `<div class="interest_tag"><p>${title}</p><button>❌</button></div>`
   }
+  calculateInputWidth(input_interest) {
+    let value = input_interest.value
+    this.box.insertAdjacentHTML('afterbegin', '<div id="virtual_dom">' + value + '</div>');
+
+    // 글자 하나의 대략적인 크기 
+    let input_width = document.getElementById('virtual_dom').offsetWidth + 10 + "px";
+    input_interest.style.width = input_width
+    document.getElementById('virtual_dom').remove()
+  }
 }
 
 let data_from_database = new class_data_from_database()
-
-
 let data_of_checked = new class_data_of_checked()
 new class_check_interest()
 new class_check_account()
