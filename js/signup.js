@@ -375,7 +375,8 @@ interest_count:    ${this.interest_count}
       this.box = document.getElementById('interest')
       this.input_interest = document.getElementById('input_interest')
       this.p_message = this.box.parentNode.querySelector('.check_message')
-
+      this.input_interest_hidden = this.box.parentNode.querySelector('.hidden')
+      
       this.input_interest.style.width = '-webkit-fill-available'
 
       this.render_interest()
@@ -448,6 +449,7 @@ interest_count:    ${this.interest_count}
         this.fillCloseEvent(new_interest_tag)
       })
       this.data.interest_list.push(title)
+      this.input_interest_hidden.value = this.data.interest_list
       this.data.interest_count += 1
       this.checkCountOfTag()
     }
@@ -455,6 +457,7 @@ interest_count:    ${this.interest_count}
     popTag() {
       this.box.removeChild(this.box.childNodes[this.box.childNodes.length - 3])
       this.input_interest.value = this.data.interest_list.pop()
+      this.input_interest_hidden.value = this.data.interest_list
       this.data.interest_count -= 1
       this.checkCountOfTag()
     }
