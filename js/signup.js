@@ -638,7 +638,6 @@ interest_count:    ${this.interest_count}
 
   class signup {
     constructor() {
-      console.log('make new signup')
       this.data = new class_data_signup()
       new class_interest(this.data)
       new class_account(this.data)
@@ -652,5 +651,4 @@ interest_count:    ${this.interest_count}
   }
 
   new signup()
-  console.log('new load')
 })()
