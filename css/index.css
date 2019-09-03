@@ -1,0 +1,312 @@
+html {
+  --main-theme-color: #49A6A6;
+  --main-background-color: #dddddd;
+  --interest-tag-height: 30px;
+  --interest-tag-color: #bbb;
+  --interest-input-color: #fc0;
+  --main-footer-color: #777777;
+
+  --nav-bar-height: 50px;
+  --footer-height : 100px;
+  --min-body-height : 80%;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none
+}
+
+a:hover,
+a:active,
+a:focus {
+  text-decoration: underline
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--main-background-color);
+  margin: 0px;
+  min-height:100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body .app-root {
+  min-height: 100%;
+  overflow: auto;  
+}
+
+body .container_body {
+  margin: 0px auto;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+}
+
+body .container_body form {
+  width: 100%;
+}
+
+input,
+#virtual_dom {
+  font-size: 1em;
+}
+
+form input,
+form select {
+  height: var(--nav-bar-height);
+  border-color: transparent;
+}
+
+form input[type="checkbox"] {
+  height: inherit;
+}
+
+section {
+  margin: 50px 0px;
+  padding: 0px;
+}
+
+nav {
+  background-color: var(--main-theme-color);
+  height: var(--nav-bar-height);
+}
+
+nav li {
+  padding: 5px 10px;
+  height: 50px;
+  border: 1px solid transparent;
+  display: flex;
+  align-content: center;
+}
+
+nav li a {
+  margin: 10px;
+  font-style: normal;
+  text-decoration: none;
+  color: white;
+  font-size: 1.5em;
+}
+
+nav ul {
+  margin: 0px;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  padding: 5px;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-footer-color);
+  height: var(--footer-height);
+}
+
+footer .container_footer {
+  text-align: center;
+  color:white;
+}
+
+footer p{
+  margin:15px;
+}
+
+.container {
+  margin: 50px 0px;
+  padding: 0px;
+}
+
+.element {
+  margin: 10px 0px;
+}
+
+.element input,
+.element select {
+  width: 100%;
+}
+
+.element .content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.element .content input,
+.element .content select {
+  width: 100%;
+}
+
+.element .content div {
+  width: 30%;
+}
+
+section h1 {
+  text-align: center;
+}
+
+.container_button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.half button {
+  width: 45%;
+}
+
+button {
+  width: 100%;
+  height: 70px;
+  color: #fff;
+  background-color: var(--main-theme-color);
+  /* border: 1px solid #000; */
+  border: 1px solid transparent;
+}
+
+.container_input {
+  background-color: #fff;
+  padding: 10px;
+  border: 2px solid;
+  border-color: transparent;
+}
+
+.container_input:focus-within {
+  border: 2px solid var(--main-theme-color);
+}
+
+.section_button {
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+#interest {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: #fff;
+}
+
+#interest .interest_tag {
+  height: var(--interest-tag-height);
+  padding: 5px;
+  margin: 5px;
+  background-color: var(--interest-tag-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+#interest {
+  padding: 5px 10px;
+}
+
+#interest .interest_tag p {
+  margin: 0px 5px;
+  margin-left: 20px;
+}
+
+#interest .interest_tag button {
+  margin: 0px;
+  height: auto;
+  width: auto;
+  background-color: transparent;
+  border: none;
+}
+
+#interest #input_interest {
+  /* background-color: var(--interest-input-color); */
+  background-color: transparent;
+}
+
+#interest #input_interest:focus {
+  outline: none;
+}
+
+#interest input {
+  height: var(--interest-tag-height);
+  width: 10px;
+  margin: 5px 0px;
+  height: 50px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  width: 400px;
+  background-color: white;
+  margin: 10% auto;
+}
+
+.modal-content .container_menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: var(--main-theme-color);
+}
+
+.modal-content .container_menu :first-child {
+  margin: 10px 20px;
+}
+
+.modal-content .container_menu p {
+  color: white;
+}
+
+
+.modal-content .container_menu button {
+  width: auto;
+  background-color: transparent;
+  border: none;
+  height: auto;
+  margin: 10px 10px;
+}
+
+.modal-content .container_terms .terms {
+  background-color: #fff;
+  overflow: scroll;
+  height: 300px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.modal-content .alert_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.modal-content .error_box {
+  margin: 10px 40px;
+}
+
+.modal-content .error_box p {
+  color: red;
+}
