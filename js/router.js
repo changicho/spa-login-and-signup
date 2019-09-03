@@ -28,7 +28,9 @@
   const routes = {
     '/': function () {
       title.innerText = "메인 페이지"
-      renderHtml('')
+      // renderHtml('')
+      get('/view/main.html')
+        .then(res => renderHtml(res))
     },
     '/login': function () {
       title.innerText = "로그인 페이지"
