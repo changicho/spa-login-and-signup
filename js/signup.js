@@ -383,6 +383,10 @@ interest_count:    ${this.interest_count}
       this.fillEventLisnter()
     }
     fillEventLisnter() {
+      this.box.addEventListener('click',()=>{
+        this.input_interest.focus()
+      })
+
       this.input_interest.addEventListener('keydown', (event) => {
         // 엔터키 무효화
         if (event.keyCode === 13) {

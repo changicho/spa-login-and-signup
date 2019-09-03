@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+/* Common */
+@font-face {
+  font-family: 'NanumBarunGothic';
+  src: url('/fonts/NanumBarunGothic.eot');
+  src: url('/fonts/NanumBarunGothic.eot') format('embedded-opentype'),
+    url('/fonts/NanumBarunGothic.woff') format('woff');
+}
+
+
+body,
+input,
+textarea,
+select,
+button,
+table {
+  font-size: 14px;
+  line-height: 1.25em;
+  font-family: 'NanumBarunGothic', 'serif';
+}

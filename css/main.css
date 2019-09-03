@@ -37,13 +37,14 @@ body {
 }
 
 body .container_body {
+  min-height: 100%;
   margin: 0px auto;
   display: flex;
   justify-content: center;
   /* width: 500px; */
 }
 
-body .container_body .app-root{
+body .container_body .app-root {
   width: 500px;
 }
 
@@ -73,14 +74,16 @@ nav {
 }
 
 #navigation li {
-  padding: 10px;
-  margin: 0px 10px;
+  padding: 5px 10px;
   height: 50px;
   border: 1px solid transparent;
   /* background-color:white; */
+  display: flex;
+  align-content: center;
 }
 
 #navigation li a {
+  margin: 10px;
   font-style: normal;
   text-decoration: none;
   color: white;
@@ -91,7 +94,7 @@ nav ul {
   margin: 0px;
   list-style-type: none;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 nav ul li {
@@ -203,13 +206,18 @@ button {
 }
 
 #interest #input_interest {
-  background-color: var(--interest-input-color);
+  /* background-color: var(--interest-input-color); */
+  background-color: transparent;
+}
+
+#interest #input_interest:focus {
+  outline: none;
 }
 
 #interest input {
   height: var(--interest-tag-height);
   width: 10px;
-  margin: 5px;
+  margin: 5px 0px;
   height: 50px;
 }
 
@@ -243,6 +251,11 @@ button {
   margin: 10px 20px;
 }
 
+.modal-content .container_menu p {
+  color: white;
+}
+
+
 .modal-content .container_menu button {
   width: auto;
   background-color: transparent;
@@ -270,4 +283,6 @@ button {
   margin: 10px 40px;
 }
 
-.modal-content .error_box p {}
+.modal-content .error_box p {
+  color: red;
+}

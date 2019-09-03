@@ -1,5 +1,3 @@
-<!-- <link rel="stylesheet" href="css/main.css"> -->
-
 <section>
   <h1>회원가입</h1>
 </section>
@@ -112,6 +110,7 @@
         <input type="text" id="input_interest">
       </div>
       <p class="check_message"></p>
+      <input type="text" name="interest" class="hidden">
     </div>
   </section>
 
@@ -119,7 +118,7 @@
     <p id="button_terms"><span>약관에 동의합니다</span> <input type="checkbox" id="check_terms"></p>
     <div class="container_button half">
       <button type="button" id="button_reset">초기화</button>
-      <button type="button" id = "button_signin">가입하기</button>
+      <button type="button" id="button_signin">가입하기</button>
     </div>
   </section>
 
@@ -127,7 +126,7 @@
     <div class="modal-content">
       <div class="container_menu">
         <p>개인정보 수집 및 이용에 대한 안내</p>
-        <button id="close_terms">❌</button>
+        <button type="button" id="close_terms">❌</button>
       </div>
 
       <section class="container_terms">
@@ -206,7 +205,7 @@
     <div class="modal-content">
       <div class="container_menu">
         <p></p>
-        <button class="close">❌</button>
+        <button type="button" class="close">❌</button>
       </div>
 
       <section class="alert_box">
