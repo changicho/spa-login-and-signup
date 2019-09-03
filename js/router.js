@@ -6,11 +6,6 @@
   const navigation = document.getElementById('navigation');
   const title = document.querySelector('title')
 
-  const script_signup = document.createElement('script')
-  script_signup.src = '/js/signup.js'
-
-  document.head.appendChild(script_signup)
-
   function renderHtml(html) {
     root.innerHTML = html;
   }
@@ -46,11 +41,10 @@
       get('/view/signup.html')
         .then((res) => {
           renderHtml(res)
-          setTimeout(() => {
-            new signup()
-          }, 100)
         });
-
+      const script_signup = document.createElement('script')
+      script_signup.src = '/js/signup.js'
+      document.head.appendChild(script_signup)
     },
     otherwise(path) {
       title.innerText = "page not found"
