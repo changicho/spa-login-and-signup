@@ -80,13 +80,13 @@ data : [
         current.innerText = ''
       }, [])
 
-      Array.from(document.querySelectorAll('input')).reduce((previous, current) => {
-        current.value = ''
-      }, [])
+      // Array.from(document.querySelectorAll('input')).reduce((previous, current) => {
+      //   current.value = ''
+      // }, [])
 
-      Array.from(document.querySelectorAll('select')).reduce((previous, current) => {
-        current.selectedIndex = 0
-      }, [])
+      // Array.from(document.querySelectorAll('select')).reduce((previous, current) => {
+      //   current.selectedIndex = 0
+      // }, [])
     }
     showCheckedData() {
       console.log(`
@@ -126,7 +126,7 @@ interest_count:    ${this.interest_count}
       let rule_id = /^[a-z0-9-_]{5,20}$/
       let rule_password = /^[a-zA-z0-9~`!@#$%\^&*()-+=]{8,16}$/
       this.check_rule = [rule_id, rule_password, rule_password]
-      this.section_account = document.getElementById('account_information')
+      this.section_account = document.getElementById('section_account')
 
       this.fillEventListener()
     }
@@ -183,13 +183,13 @@ interest_count:    ${this.interest_count}
     조건 불만족시 에러 메시지
     조건 만족시 메시지
     검사할 정규식
-    private_information section tag
+    section_private section tag
   ] */
   class class_private {
     constructor(data) {
       this.data = data
 
-      this.section_private = document.getElementById('private_information')
+      this.section_private = document.getElementById('section_private')
 
       this.input_name = document.getElementsByName('name')[0]
       this.select_gender = document.getElementsByName('gender')[0]
@@ -203,6 +203,9 @@ interest_count:    ${this.interest_count}
         this.checkName()
       })
       this.select_gender.addEventListener('change', () => {
+        if (this.select_gender.value === "") {
+          return
+        }
         this.checkGender()
       })
       this.input_email.addEventListener('keyup', () => {
@@ -268,7 +271,7 @@ interest_count:    ${this.interest_count}
     constructor(data) {
       this.data = data
 
-      this.p_message = document.getElementById('private_information').children[1].children[2]
+      this.p_message = document.getElementById('section_private').children[1].children[2]
       this.year = 0
       this.month = 0
       this.day = 0
@@ -289,6 +292,9 @@ interest_count:    ${this.interest_count}
       })
 
       this.select_month.addEventListener('change', () => {
+        if (this.select_month.value === "") {
+          return
+        }
         this.checkMonthOfBirth()
       })
 
@@ -376,23 +382,18 @@ interest_count:    ${this.interest_count}
       this.input_interest = document.getElementById('input_interest')
       this.p_message = this.box.parentNode.querySelector('.check_message')
       this.input_interest_hidden = this.box.parentNode.querySelector('.hidden')
-      
+
       this.input_interest.style.width = '-webkit-fill-available'
 
       this.render_interest()
       this.fillEventLisnter()
     }
     fillEventLisnter() {
-      this.box.addEventListener('click',()=>{
+      this.box.addEventListener('click', () => {
         this.input_interest.focus()
       })
 
       this.input_interest.addEventListener('keydown', (event) => {
-        // 엔터키 무효화
-        if (event.keyCode === 13) {
-          event.preventDefault()
-        }
-
         // case backspace
         if (event.keyCode === 8 && this.input_interest.value === '' && this.data.interest_list.length !== 0) {
           // 글자 지우는 event 이후에 값을 온전히 불러오기 위해
@@ -596,7 +597,7 @@ interest_count:    ${this.interest_count}
       this.modal = document.getElementById('alert_empty')
       this.button_close = document.querySelectorAll('#alert_empty .close')
       this.button_agree_reset = document.querySelector('#alert_empty .agree')
-      this.alert_box = this.modal.querySelector('.error_box')
+      this.alert_box = this.modal.querySelector('#modal_error_box')
 
       this.fillEventListener()
     }
@@ -634,7 +635,7 @@ interest_count:    ${this.interest_count}
         alert.innerHTML = `<p>${current}</p>`
         error_box.appendChild(alert)
       }, [])
-      console.log(error_box)
+
       this.alert_box.appendChild(error_box)
     }
     closeModal() {
@@ -643,9 +644,20 @@ interest_count:    ${this.interest_count}
     }
   }
 
+  class class_set_preventDefault {
+    constructor() {
+      document.addEventListener('keydown', function (event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+        };
+      }, true);
+    }
+  }
+
   class signup {
     constructor() {
       this.data = new class_data_signup()
+      new class_set_preventDefault()
       new class_interest(this.data)
       new class_account(this.data)
       new class_private(this.data)

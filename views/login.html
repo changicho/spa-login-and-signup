@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="ko">
   <head>
+    <meta charset="UTF-8" />
+
     <link rel="stylesheet" href="stylesheets/bootstrap.min.css" />
     <link rel="stylesheet" href="stylesheets/reset.css" />
     <link rel="stylesheet" href="stylesheets/index.css" />
@@ -18,8 +21,8 @@
 
     <div class="app-root">
       <div class="container_body">
-        <form action="">
-          <section class="section_login">
+        <form action="checkConfidentiality">
+          <section id="section_login">
             <div class="element">
               <div class="container_input">
                 <input type="text" placeholder="아이디" />
@@ -31,8 +34,8 @@
               </div>
             </div>
           </section>
-          <section class="section_button">
-            <button type="submit">로그인</button>
+          <section id="section_button">
+            <button type="submit" id="submit_axios">로그인</button>
           </section>
         </form>
       </div>

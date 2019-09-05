@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="ko">
   <head>
+    <meta charset="UTF-8" />
+
     <link rel="stylesheet" href="stylesheets/reset.css" />
     <link rel="stylesheet" href="stylesheets/index.css" />
     <link rel="stylesheet" href="stylesheets/main.css" />
@@ -14,15 +17,14 @@
         <li><a href="/signup">signup</a></li>
       </ul>
     </nav>
-
     <div class="app-root">
       <div class="container_body">
-        <form action="">
-          <section>
+        <form action="checkData" method="POST">
+          <section id="section_title">
             <h1>회원가입</h1>
           </section>
 
-          <section class="container" id="account_information">
+          <section class="container" id="section_account">
             <div class="element">
               <p>아이디 (5자 이상 20자 이하)</p>
               <div class="container_input">
@@ -53,11 +55,11 @@
             </div>
           </section>
 
-          <section class="container" id="private_information">
+          <section class="container" id="section_private">
             <div class="element">
               <p>이름</p>
               <div class="container_input">
-                <input type="" value="" name="name" required />
+                <input type="text" name="name" required />
               </div>
               <p class="check_message hidden"></p>
             </div>
@@ -69,7 +71,6 @@
                 <div class="container_input">
                   <input
                     type="text"
-                    value=""
                     name="year"
                     placeholder="연"
                     maxlength="4"
@@ -78,8 +79,8 @@
                 </div>
 
                 <div class="container_input">
-                  <select placeholder="월" name="month" required>
-                    <option value="0" selected disabled hidden>월</option>
+                  <select name="month" required>
+                    <option value="" selected>월</option>
                     <option value="1">1월</option>
                     <option value="2">2월</option>
                     <option value="3">3월</option>
@@ -97,8 +98,7 @@
 
                 <div class="container_input">
                   <input
-                    type=""
-                    value=""
+                    type="text"
                     name="day"
                     placeholder="일"
                     maxlength="4"
@@ -113,7 +113,7 @@
               <p>성별</p>
               <div class="container_input">
                 <select name="gender" required>
-                  <option value="" selected disabled hidden>성별</option>
+                  <option value="" selected>성별</option>
                   <option value="male">남</option>
                   <option value="female">여</option>
                 </select>
@@ -124,7 +124,7 @@
             <div class="element">
               <p>이메일</p>
               <div class="container_input">
-                <input type="" value="" name="email" required />
+                <input type="text" name="email" required />
               </div>
               <p class="check_message"></p>
             </div>
@@ -132,7 +132,7 @@
             <div class="element">
               <p>휴대전화</p>
               <div class="container_input">
-                <input type="" value="" name="phone" maxlength="13" required />
+                <input type="text" name="phone" maxlength="13" required />
               </div>
               <p class="check_message"></p>
             </div>
@@ -143,7 +143,7 @@
                 <input type="text" id="input_interest" />
               </div>
               <p class="check_message"></p>
-              <input type="text" name="interest" class="hidden" />
+              <input type="text" name="interests_string" class="hidden" />
             </div>
           </section>
 
@@ -154,7 +154,7 @@
             </p>
             <div class="container_button half">
               <button type="button" id="button_reset">초기화</button>
-              <button type="button" id="button_signin">가입하기</button>
+              <button type="submit" id="button_signin">가입하기</button>
             </div>
           </section>
 
@@ -165,7 +165,7 @@
                 <button type="button" id="close_terms">❌</button>
               </div>
 
-              <section class="container_terms">
+              <div class="container">
                 <div class="terms">
                   정보통신망법 규정에 따라 부스트캠프에 회원가입 신청하시는 분께
                   수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적,
@@ -242,7 +242,7 @@
                   <br />
                   <br />
                 </div>
-              </section>
+              </div>
               <div class="container_button">
                 <button class="agree" type="button">동의</button>
               </div>
@@ -256,11 +256,11 @@
                 <button type="button" class="close">❌</button>
               </div>
 
-              <section class="alert_box">
+              <div class="container">
                 <p>초기화 하시겠습니까?</p>
-              </section>
+              </div>
               <div class="container_button">
-                <button class="agree" type="button">예</button>
+                <button class="agree" type="reset">예</button>
                 <button class="close" type="button">아니오</button>
               </div>
             </div>
@@ -272,7 +272,7 @@
                 <p>빈 항목이 존재합니다.</p>
                 <button class="close">❌</button>
               </div>
-              <section class="error_box"></section>
+              <div id="modal_error_box" class="container"></div>
               <div class="container_button">
                 <button class="agree" type="button">확인</button>
               </div>

@@ -288,7 +288,7 @@ button {
   margin: 10px 10px;
 }
 
-.modal-content .container_terms .terms {
+.modal-content .container .terms {
   background-color: #fff;
   overflow: scroll;
   height: 300px;
