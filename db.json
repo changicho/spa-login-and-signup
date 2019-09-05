@@ -1,0 +1,18 @@
+{
+  "accounts": [
+    {
+      "id": "test_id_1",
+      "password": "v0AMKhy8LFU2rsQgGIZO21c47Wm/VIigF6GurSH4iK4FoTwvMN4ASkpvpO7euMjWL3lxKk+EiefspAjlezbCUA==",
+      "name": "myname",
+      "birthdate": "2000.11.30",
+      "gender": "male",
+      "email": "email@google.com",
+      "phone": "010-0000-0000",
+      "interest": [
+        "interest1",
+        "interest2",
+        "interest3"
+      ]
+    }
+  ]
+}

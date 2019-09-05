@@ -10,6 +10,9 @@ const FileSync = require('lowdb/adapters/FileSync')
 const adapter = new FileSync('db.json')
 const db = low(adapter)
 
+// SHA512 암호화 사용하기 위한 추가
+const crypto = require('crypto');
+
 let app = express();
 
 // view engine setup
@@ -38,19 +41,23 @@ app.get('/login', function (request, response, next) {
   response.render('login');
 });
 
-app.post('/sendAccountInformation', function(request, response, next){
-  // console.log(request.body);
+app.post('/sendAccountInformation', function (request, response, next) {
   // request.body 는 json
   push_account(requst.body);
   response.render('login');
 })
 
-app.post('/checkData', function(request, response, next){
+app.post('/checkData', function (request, response, next) {
+  console.log(request.body);
+  response.send(request.body);
+})
+
+app.post('/checkConfidentiality', function (request, response, next) {
   console.log(request.body);
 })
 
-app.post('/checkConfidentiality', function(request, response, next){
-  console.log(request.body);
+app.post('/storeDataOfAccount', function (request, response, next) {
+  push_data(request.body);
 })
 
 // catch 404 and forward to error handler
@@ -69,8 +76,22 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-function push_account(reqiest_body){
+function push_data(requst_body) {
+  let password_sha512 = crypto.createHash('sha512').update(requst_body.password).digest('base64');
 
+  let data = {
+    "id": requst_body.id,
+    "password": password_sha512,
+    "name": requst_body.name,
+    "birthdate": `${requst_body.year}.${requst_body.month}.${requst_body.day}`,
+    "gender": requst_body.gender,
+    "email": requst_body.email,
+    "phone": requst_body.phone,
+    "interest": requst_body.interests_string.split(', ')
+  }
+  db.get('accounts')
+    .push(data)
+    .write()
 }
 
 module.exports = app;
