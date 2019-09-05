@@ -1,238 +1,293 @@
-<div class="container_body">
-  <form action="">
-    <section>
-      <h1>회원가입</h1>
-    </section>
+<html>
+  <head>
+    <link rel="stylesheet" href="stylesheets/reset.css" />
+    <link rel="stylesheet" href="stylesheets/index.css" />
+    <link rel="stylesheet" href="stylesheets/main.css" />
+    <title>회원 가입 페이지</title>
+  </head>
 
-    <section class="container" id="account_information">
-      <div class="element">
-        <p>아이디 (5자 이상 20자 이하)</p>
-        <div class="container_input">
-          <input type="text" name="id" maxlength="20" required>
-        </div>
-        <p class="check_message"></p>
-      </div>
+  <body>
+    <nav>
+      <ul id="navigation">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">signup</a></li>
+      </ul>
+    </nav>
 
-      <div class="element">
-        <p>비밀번호 (8자 이상 16자 이하)</p>
-        <div class="container_input">
-          <input type="password" name="password" maxlength="16" required>
-        </div>
-        <p class="check_message"></p>
-      </div>
+    <div class="app-root">
+      <div class="container_body">
+        <form action="">
+          <section>
+            <h1>회원가입</h1>
+          </section>
 
-      <div class="element">
-        <p>비밀번호 재확인</p>
-        <div class="container_input">
-          <input type="password" name="password_again" required>
-        </div>
-        <p class="check_message"></p>
-      </div>
-    </section>
+          <section class="container" id="account_information">
+            <div class="element">
+              <p>아이디 (5자 이상 20자 이하)</p>
+              <div class="container_input">
+                <input type="text" name="id" maxlength="20" required />
+              </div>
+              <p class="check_message"></p>
+            </div>
 
-    <section class="container" id="private_information">
-      <div class="element">
-        <p>이름</p>
-        <div class="container_input">
-          <input type="" value="" name="name" required>
-        </div>
-        <p class="check_message hidden"></p>
-      </div>
+            <div class="element">
+              <p>비밀번호 (8자 이상 16자 이하)</p>
+              <div class="container_input">
+                <input
+                  type="password"
+                  name="password"
+                  maxlength="16"
+                  required
+                />
+              </div>
+              <p class="check_message"></p>
+            </div>
 
+            <div class="element">
+              <p>비밀번호 재확인</p>
+              <div class="container_input">
+                <input type="password" name="password_again" required />
+              </div>
+              <p class="check_message"></p>
+            </div>
+          </section>
 
-      <div class="element">
-        <p>생년월일</p>
+          <section class="container" id="private_information">
+            <div class="element">
+              <p>이름</p>
+              <div class="container_input">
+                <input type="" value="" name="name" required />
+              </div>
+              <p class="check_message hidden"></p>
+            </div>
 
-        <div class="content">
-          <div class="container_input">
-            <input type="text" value="" name="year" placeholder="연" maxlength="4" required>
+            <div class="element">
+              <p>생년월일</p>
+
+              <div class="content">
+                <div class="container_input">
+                  <input
+                    type="text"
+                    value=""
+                    name="year"
+                    placeholder="연"
+                    maxlength="4"
+                    required
+                  />
+                </div>
+
+                <div class="container_input">
+                  <select placeholder="월" name="month" required>
+                    <option value="0" selected disabled hidden>월</option>
+                    <option value="1">1월</option>
+                    <option value="2">2월</option>
+                    <option value="3">3월</option>
+                    <option value="4">4월</option>
+                    <option value="5">5월</option>
+                    <option value="6">6월</option>
+                    <option value="7">7월</option>
+                    <option value="8">8월</option>
+                    <option value="9">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+                  </select>
+                </div>
+
+                <div class="container_input">
+                  <input
+                    type=""
+                    value=""
+                    name="day"
+                    placeholder="일"
+                    maxlength="4"
+                    required
+                  />
+                </div>
+              </div>
+              <p class="check_message"></p>
+            </div>
+
+            <div class="element">
+              <p>성별</p>
+              <div class="container_input">
+                <select name="gender" required>
+                  <option value="" selected disabled hidden>성별</option>
+                  <option value="male">남</option>
+                  <option value="female">여</option>
+                </select>
+              </div>
+              <p class="check_message"></p>
+            </div>
+
+            <div class="element">
+              <p>이메일</p>
+              <div class="container_input">
+                <input type="" value="" name="email" required />
+              </div>
+              <p class="check_message"></p>
+            </div>
+
+            <div class="element">
+              <p>휴대전화</p>
+              <div class="container_input">
+                <input type="" value="" name="phone" maxlength="13" required />
+              </div>
+              <p class="check_message"></p>
+            </div>
+
+            <div class="element">
+              <p>관심사</p>
+              <div id="interest" class="container_input">
+                <input type="text" id="input_interest" />
+              </div>
+              <p class="check_message"></p>
+              <input type="text" name="interest" class="hidden" />
+            </div>
+          </section>
+
+          <section class="section_button">
+            <p id="button_terms">
+              <span>약관에 동의합니다</span>
+              <input type="checkbox" id="check_terms" />
+            </p>
+            <div class="container_button half">
+              <button type="button" id="button_reset">초기화</button>
+              <button type="button" id="button_signin">가입하기</button>
+            </div>
+          </section>
+
+          <div id="terms" class="modal">
+            <div class="modal-content">
+              <div class="container_menu">
+                <p>개인정보 수집 및 이용에 대한 안내</p>
+                <button type="button" id="close_terms">❌</button>
+              </div>
+
+              <section class="container_terms">
+                <div class="terms">
+                  정보통신망법 규정에 따라 부스트캠프에 회원가입 신청하시는 분께
+                  수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적,
+                  개인정보의 보유 및 이용기간을 안내 드리오니 자세히 읽은 후
+                  동의하여 주시기 바랍니다.
+                  <br />
+                  <br />
+                  1. 수집하는 개인정보의 항목
+                  <br />
+                  최초 회원가입 당시 아래와 같은 최소한의 개인정보를
+                  필수항목으로 수집하고 있습니다.
+                  <br />
+                  - 필수항목 : 아이디, 비밀번호, 이름, 생년월일, 성별, 이메일,
+                  휴대전화, 관심사
+                  <br />
+                  <br />
+                  2. 개인정보의 수집 및 이용 목적
+                  <br />
+                  가. 컨텐츠 제공, 특정 맞춤 서비스 제공
+                  <br />
+                  나. 회원제 서비스 제공, 개인식별, 부스트캠프 이용약관 위반
+                  회원에 대한 이용제한 조치, 서비스의 원활한 운영에 지장을
+                  미치는 행위 및 서비스 부정이용 행위 제재
+                  <br />
+                  <br />
+                  3. 개인정보의 보유 및 이용기간
+                  <br />
+                  이용자의 개인정보는 원칙적으로 개인정보의 수집 및 이용목적이
+                  달성되면 지체 없이 파기합니다. 단, 다음의 정보에 대해서는
+                  아래의 이유로 명시한 기간 동안 보존합니다.
+                  <br />
+                  <br />
+                  가. 회사 내부 방침에 의한 정보보유 사유
+                  <br />
+                  - 부정이용기록(부정가입, 징계기록 등의 비정상적 서비스
+                  이용기록)
+                  <br />
+                  보존 항목 : 가입인증 휴대폰 번호
+                  <br />
+                  보존 이유 : 부정 가입 및 이용 방지
+                  <br />
+                  보존 기간 : 6개월
+                  <br />
+                  ※ '부정이용기록'이란 부정 가입 및 운영원칙에 위배되는 게시글
+                  작성 등으로 인해 회사로부터 이용제한 등을 당한 기록입니다.
+                  <br />
+                  <br />
+                  나. 관련법령에 의한 정보보유 사유
+                  <br />
+                  상법, 전자상거래 등에서의 소비자보호에 관한 법률 등 관계법령의
+                  규정에 의하여 보존할 필요가 있는 경우 회사는 관계법령에서 정한
+                  일정한 기간 동안 회원정보를 보관합니다. 이 경우 회사는
+                  보관하는 정보를 그 보관의 목적으로만 이용하며 보존기간은
+                  아래와 같습니다.
+                  <br />
+                  - 계약 또는 청약철회 등에 관한 기록
+                  <br />
+                  보존 이유 : 전자상거래 등에서의 소비자보호에 관한 법률
+                  <br />
+                  보존 기간 : 5년
+                  <br />
+                  - 소비자의 불만 또는 분쟁처리에 관한 기록
+                  <br />
+                  보존 이유 : 전자상거래 등에서의 소비자보호에 관한 법률
+                  <br />
+                  보존 기간 : 3년
+                  <br />
+                  - 웹사이트 방문기록
+                  <br />
+                  보존 이유 : 통신비밀보호법
+                  <br />
+                  보존 기간 : 3개월
+                  <br />
+                  <br />
+                  <br />
+                </div>
+              </section>
+              <div class="container_button">
+                <button class="agree" type="button">동의</button>
+              </div>
+            </div>
           </div>
 
-          <div class="container_input">
-            <select placeholder="월" name="month" required>
-              <option value="0" selected disabled hidden>월</option>
-              <option value="1">1월</option>
-              <option value="2">2월</option>
-              <option value="3">3월</option>
-              <option value="4">4월</option>
-              <option value="5">5월</option>
-              <option value="6">6월</option>
-              <option value="7">7월</option>
-              <option value="8">8월</option>
-              <option value="9">9월</option>
-              <option value="10">10월</option>
-              <option value="11">11월</option>
-              <option value="12">12월</option>
-            </select>
+          <div id="reset" class="modal">
+            <div class="modal-content">
+              <div class="container_menu">
+                <p></p>
+                <button type="button" class="close">❌</button>
+              </div>
+
+              <section class="alert_box">
+                <p>초기화 하시겠습니까?</p>
+              </section>
+              <div class="container_button">
+                <button class="agree" type="button">예</button>
+                <button class="close" type="button">아니오</button>
+              </div>
+            </div>
           </div>
 
-
-          <div class="container_input">
-            <input type="" value="" name="day" placeholder="일" maxlength="4" required>
+          <div id="alert_empty" class="modal">
+            <div class="modal-content">
+              <div class="container_menu">
+                <p>빈 항목이 존재합니다.</p>
+                <button class="close">❌</button>
+              </div>
+              <section class="error_box"></section>
+              <div class="container_button">
+                <button class="agree" type="button">확인</button>
+              </div>
+            </div>
           </div>
-        </div>
-        <p class="check_message"></p>
-      </div>
-
-      <div class="element">
-        <p>성별</p>
-        <div class="container_input">
-          <select name="gender" required>
-            <option value="" selected disabled hidden>성별</option>
-            <option value="male">남</option>
-            <option value="female">여</option>
-          </select>
-        </div>
-        <p class="check_message"></p>
-      </div>
-
-
-      <div class="element">
-        <p>이메일</p>
-        <div class="container_input">
-          <input type="" value="" name="email" required>
-        </div>
-        <p class="check_message"></p>
-      </div>
-
-
-      <div class="element">
-        <p>휴대전화</p>
-        <div class="container_input">
-          <input type="" value="" name="phone" maxlength="13" required>
-        </div>
-        <p class="check_message"></p>
-      </div>
-
-
-      <div class="element">
-        <p>관심사</p>
-        <div id="interest" class="container_input">
-          <input type="text" id="input_interest">
-        </div>
-        <p class="check_message"></p>
-        <input type="text" name="interest" class="hidden">
-      </div>
-    </section>
-
-    <section class="section_button">
-      <p id="button_terms"><span>약관에 동의합니다</span> <input type="checkbox" id="check_terms"></p>
-      <div class="container_button half">
-        <button type="button" id="button_reset">초기화</button>
-        <button type="button" id="button_signin">가입하기</button>
-      </div>
-    </section>
-
-    <div id="terms" class="modal">
-      <div class="modal-content">
-        <div class="container_menu">
-          <p>개인정보 수집 및 이용에 대한 안내</p>
-          <button type="button" id="close_terms">❌</button>
-        </div>
-
-        <section class="container_terms">
-          <div class="terms">
-            정보통신망법 규정에 따라 부스트캠프에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및 이용기간을 안내 드리오니 자세히 읽은 후 동의하여
-            주시기
-            바랍니다.
-            <br>
-            <br>
-            1. 수집하는 개인정보의 항목
-            <br>
-            최초 회원가입 당시 아래와 같은 최소한의 개인정보를 필수항목으로 수집하고 있습니다.
-            <br>
-            - 필수항목 : 아이디, 비밀번호, 이름, 생년월일, 성별, 이메일, 휴대전화, 관심사
-            <br>
-            <br>
-            2. 개인정보의 수집 및 이용 목적
-            <br>
-            가. 컨텐츠 제공, 특정 맞춤 서비스 제공
-            <br>
-            나. 회원제 서비스 제공, 개인식별, 부스트캠프 이용약관 위반 회원에 대한 이용제한 조치, 서비스의 원활한 운영에 지장을 미치는 행위 및 서비스 부정이용 행위 제재
-            <br>
-            <br>
-            3. 개인정보의 보유 및 이용기간
-            <br>
-            이용자의 개인정보는 원칙적으로 개인정보의 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 단, 다음의 정보에 대해서는 아래의 이유로 명시한 기간 동안 보존합니다.
-            <br>
-            <br>
-            가. 회사 내부 방침에 의한 정보보유 사유
-            <br>
-            - 부정이용기록(부정가입, 징계기록 등의 비정상적 서비스 이용기록)
-            <br>
-            보존 항목 : 가입인증 휴대폰 번호
-            <br>
-            보존 이유 : 부정 가입 및 이용 방지
-            <br>
-            보존 기간 : 6개월
-            <br>
-            ※ '부정이용기록'이란 부정 가입 및 운영원칙에 위배되는 게시글 작성 등으로 인해 회사로부터 이용제한 등을 당한 기록입니다.
-            <br>
-            <br>
-            나. 관련법령에 의한 정보보유 사유
-            <br>
-            상법, 전자상거래 등에서의 소비자보호에 관한 법률 등 관계법령의 규정에 의하여 보존할 필요가 있는 경우 회사는 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다. 이 경우 회사는 보관하는
-            정보를
-            그 보관의 목적으로만 이용하며 보존기간은 아래와 같습니다.
-            <br>
-            - 계약 또는 청약철회 등에 관한 기록
-            <br>
-            보존 이유 : 전자상거래 등에서의 소비자보호에 관한 법률
-            <br>
-            보존 기간 : 5년
-            <br>
-            - 소비자의 불만 또는 분쟁처리에 관한 기록
-            <br>
-            보존 이유 : 전자상거래 등에서의 소비자보호에 관한 법률
-            <br>
-            보존 기간 : 3년
-            <br>
-            - 웹사이트 방문기록
-            <br>
-            보존 이유 : 통신비밀보호법
-            <br>
-            보존 기간 : 3개월
-            <br>
-            <br>
-            <br>
-          </div>
-        </section>
-        <div class="container_button">
-          <button class="agree" type="button">동의</button>
-        </div>
+        </form>
       </div>
     </div>
+    <script src="javascripts/signup.js"></script>
 
-    <div id="reset" class="modal">
-      <div class="modal-content">
-        <div class="container_menu">
-          <p></p>
-          <button type="button" class="close">❌</button>
-        </div>
-
-        <section class="alert_box">
-          <p>초기화 하시겠습니까?</p>
-        </section>
-        <div class="container_button">
-          <button class="agree" type="button">예</button>
-          <button class="close" type="button">아니오</button>
-        </div>
+    <footer>
+      <div class="container_footer">
+        <p>made by chan</p>
+        <p>email : changicho29@gmail.com</p>
       </div>
-    </div>
-
-    <div id="alert_empty" class="modal">
-      <div class="modal-content">
-        <div class="container_menu">
-          <p>빈 항목이 존재합니다.</p>
-          <button class="close">❌</button>
-        </div>
-        <section class="error_box">
-        </section>
-        <div class="container_button">
-          <button class="agree" type="button">확인</button>
-        </div>
-      </div>
-    </div>
-  </form>
-
-</div>
+    </footer>
+  </body>
+</html>
