@@ -3,3 +3,4 @@ test/
 test_version/
 js/module
 node_modules/
+dbsetting.js
