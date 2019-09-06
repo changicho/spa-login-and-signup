@@ -14,10 +14,11 @@ router.get('/signup', function(req, res, next) {
   res.render('layout');
 });
 
-router.get('/main', function(req, res, next) {
-  // res.render('layout');
-  res.send("$$$");
-
+/**
+ * axios 테스트용 페이지
+ */
+router.get('/test', function (request, response, next) {
+  response.render('axios_test');
 });
 
 module.exports = router;

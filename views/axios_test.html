@@ -1,22 +1,26 @@
 <form name="info">
-    <input type="text" name="name" />
-  
-    <button type="button" id="axios">전송하기</button>
-  </form>
-  
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-    // let button = document.getElementById("axois");
-  
+  <input type="text" name="name" />
+
+  <button type="button" id="axios" onclick="send()">전송하기</button>
+</form>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  // let button = document.getElementById("axois");
+  function send() {
     axios({
-      url: "checkData",
+      url: "api/check_data",
       method: "post",
       data: {
-        id: "test_id_2",
-        password: "12341234"
+        status: document.getElementById('axios').value || "EMPTY"
       }
     }).then(res => {
       console.log(res);
-    })
-  </script>
-  
+      if (res.data === "ok") {
+        // ????
+        // location.replace("/");
+        location.href = "/"
+      }
+    });
+  }
+</script>

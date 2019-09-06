@@ -10,19 +10,14 @@ const db = low(adapter)
 // SHA512 암호화 사용하기 위한 추가
 const crypto = require('crypto');
 
-
-/**
- * axios 테스트용 페이지
- */
-router.get('/test', function (request, response, next) {
-  response.render('axios_test');
-});
-
 // post 방식으로 온 데이터를 echo 하는 test URL
 router.post('/check_data', function (request, response, next) {
-  console.log('method : POST')
-  console.log(request.body);
-  response.send(request.body);
+  // console.log(`method : POST, data = ${request.body}`);
+  if (request.body.status === "ok") {
+    response.send("ok");
+  } else {
+    response.send("no");
+  }
 })
 
 // get 방식으로 온 데이터를 echo 하는 test URL
