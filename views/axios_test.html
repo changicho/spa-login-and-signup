@@ -1,0 +1,22 @@
+<form name="info">
+    <input type="text" name="name" />
+  
+    <button type="button" id="axios">전송하기</button>
+  </form>
+  
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    // let button = document.getElementById("axois");
+  
+    axios({
+      url: "checkData",
+      method: "post",
+      data: {
+        id: "test_id_2",
+        password: "12341234"
+      }
+    }).then(res => {
+      console.log(res);
+    })
+  </script>
+  
