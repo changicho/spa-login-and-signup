@@ -42,8 +42,11 @@ router.post('/check_confidentiality', function (request, response, next) {
 })
 
 router.post('/store_account_data', function (request, response, next) {
-  push_data(make_account(request.body), 'accounts');
-  response.redirect('/')
+  let new_account = make_account(request.body)
+  // response.send(new_account)
+  push_data(new_account, 'accounts');
+  // response.redirect('/')
+  response.send({"store" : true})
 })
 
 router.post('/check_exist_id', function (request, response, next) {
@@ -77,7 +80,7 @@ function push_data(data, table) {
  */
 function make_account(requst_body) {
   let password_sha512 = crypto.createHash('sha512').update(requst_body.password).digest('base64');
-
+  console.log(password_sha512)
   return data = {
     "id": requst_body.id,
     "password": password_sha512,
@@ -86,7 +89,7 @@ function make_account(requst_body) {
     "gender": requst_body.gender,
     "email": requst_body.email,
     "phone": requst_body.phone,
-    "interest": requst_body.interests_string.split(', ')
+    "interest": requst_body.interests_string.split(',')
   }
 }
 

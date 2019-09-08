@@ -1,7 +1,8 @@
 class class_data_signup {
   constructor() {
     this.database_id_list = []
-
+    this.form = document.forms[0];
+    
     this.checkbox_terms = document.querySelector("#check_terms")
     this.interest_list = []
     this.error_messages = {
