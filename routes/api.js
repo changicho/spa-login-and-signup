@@ -35,20 +35,29 @@ router.post('/check_confidentiality', function (request, response, next) {
   console.log(request.body);
 
   if (check_password(request.body.id, request.body.password)) {
-    console.log('pass')
-    // response.render('main');
     response.redirect('/')
-
   } else {
-    console.log('fail')
+    response.send(false);
   }
 })
 
 router.post('/store_account_data', function (request, response, next) {
-  // push_data(makeAccount(request.body), 'accounts');
+  push_data(make_account(request.body), 'accounts');
   response.redirect('/')
 })
 
+router.post('/check_exist_id', function (request, response, next) {
+  let target = db.get('accounts')
+    .find({ id: request.body.id })
+    .value()
+
+  if (target === undefined) {
+    response.send({ "exist": false })
+  } else {
+    response.send({ "exist": true })
+  }
+
+})
 
 /**
  * 
@@ -66,7 +75,7 @@ function push_data(data, table) {
  * 
  * @param {*} requst_body : post로 넘어온 회원가입 정보를 DB에 저장할 수 있도록 가공해줌 
  */
-function makeAccount(requst_body) {
+function make_account(requst_body) {
   let password_sha512 = crypto.createHash('sha512').update(requst_body.password).digest('base64');
 
   return data = {
@@ -88,11 +97,15 @@ function makeAccount(requst_body) {
  */
 function check_password(input_id, input_password) {
   let input_password_sha512 = crypto.createHash('sha512').update(input_password).digest('base64');
+
   let target = db.get('accounts')
     .find({ id: input_id })
     .value()
 
-  console.log(target.password)
+  if (target === undefined) {
+    return false;
+  }
+
   if (input_password_sha512 === target.password) {
     return true;
   }

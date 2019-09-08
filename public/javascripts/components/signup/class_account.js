@@ -19,6 +19,7 @@ class class_account {
     let rule_password = /^[a-zA-z0-9~`!@#$%\^&*()-+=]{8,16}$/
     this.check_rule = [rule_id, rule_password, rule_password]
     this.section_account = document.getElementById('section_account')
+    this.p_error_message = this.section_account.querySelector('.check_message')
 
     this.fillEventListener()
   }
@@ -37,18 +38,30 @@ class class_account {
           current.children[2].innerText = this.message_ok[index]
           this.data.id = true
         }
-
-        if (index === 0) {
-          this.data.database_id_list.reduce((pre, cur) => {
-            if (cur === input_data) {
-              current.children[2].style.color = 'red'
-              current.children[2].innerText = '이미 사용중인 아이디 입니다.'
-              this.data.id = false
-            }
-          }, 0)
-        }
       })
     }, [])
+
+    // 중복 아이디를 체크해주는 부분
+    document.getElementsByName('id')[0].addEventListener('focusout', () => {
+      console.log('focusoff')
+      axios({
+        url: "api/check_exist_id",
+        method: "post",
+        data: {
+          id: document.getElementsByName('id')[0].value
+        }
+      }).then(res => {
+        // console.log(res);
+        if (res.data.exist) {
+          // console.log('exist')
+          this.p_error_message.style.color = 'red'
+          this.p_error_message.innerText = '이미 사용중인 아이디 입니다.'
+          this.data.id = false
+        } else {
+          // console.log('no exist')
+        }
+      });
+    })
 
     // 비밀번호 입력, 재입력 부분을 통틀어 서로 같은지 검사
     Array.from(this.section_account.children).reduce((previous, current) => {

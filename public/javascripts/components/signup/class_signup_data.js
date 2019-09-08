@@ -71,14 +71,6 @@ class class_data_signup {
     Array.from(document.querySelectorAll('.check_message')).reduce((previous, current) => {
       current.innerText = ''
     }, [])
-
-    // Array.from(document.querySelectorAll('input')).reduce((previous, current) => {
-    //   current.value = ''
-    // }, [])
-
-    // Array.from(document.querySelectorAll('select')).reduce((previous, current) => {
-    //   current.selectedIndex = 0
-    // }, [])
   }
   showCheckedData() {
     console.log(`
