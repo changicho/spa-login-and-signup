@@ -7,6 +7,9 @@ const FileSync = require('lowdb/adapters/FileSync')
 const adapter = new FileSync('db.json')
 const db = low(adapter)
 
+// uuid 추가
+const uuidv1 = require('uuid/v1');
+
 // SHA512 암호화 사용하기 위한 추가
 const crypto = require('crypto');
 
@@ -30,26 +33,37 @@ router.get('/check_data', function (request, response, next) {
 /**
  * 로그인 시 비밀번호 확인
  * id 정보와 pw 정보 전부 왔을 경우에만 실행
+ * id, pw가 올바를 경우 sessio에 저장
  */
 router.post('/check_confidentiality', function (request, response, next) {
-  // console.log(request.body);
-
-  if (check_password(request.body.id, request.body.password)) {
-    let user_name = find_name_by_id(request.body.id);
-
-    response.cookie('user_id', request.body.id, {
-      maxAge: 50000
-    });
-    response.cookie('user_name', user_name, {
-      maxAge: 50000
-    });
-
-    response.redirect('/')
-  } else {
-    response.send(false);
+  // if 문 구조 바꿈
+  console.log('request')
+  if (!check_password(request.body.id, request.body.password)) {
+    response.send({ result: false });
+    return;
   }
+
+  let user_name = find_name_by_id(request.body.id);
+  let uuid = uuidv1();
+  let expire_time = new Date();
+  expire_time.setMinutes(expire_time.getMinutes() + 1)
+
+  let data = {
+    "uuid": uuid,
+    "user_name": user_name,
+    "expire_time": expire_time
+  }
+  push_data(data, 'session')
+
+  response.cookie('uuid', uuid, {
+    maxAge: 50000
+  });
+  response.send({ result: true })
 })
 
+/**
+ * 회원가입 정보를 DB에 저장함
+ */
 router.post('/store_account_data', function (request, response, next) {
   let new_account = make_account(request.body)
   push_data(new_account, 'accounts');
@@ -70,17 +84,32 @@ router.post('/check_exist_id', function (request, response, next) {
 
 })
 
+/**
+ * 로그아웃을 담당하는 API
+ * 데이터베이스에서 현재 uuid 의 값을 삭제
+ */
 router.post('/logout', function (request, response, next) {
   // db에서 뭔 작업
-  console.log(request.body)
-  response.clearCookie('user_id');
-  response.clearCookie('user_name');
-  
-  response.send({"data" : true})
+  let uuid = request.body.uuid;
+
+  remove_session_data(uuid, 'session')
+  response.clearCookie('uuid');
+
+  response.send({ "data": true })
 })
 
 /**
- * 
+ * DB 의 session 테이블에서 uuid 로 유저의 이름을 찾아줌.
+ */
+router.post('/get_username_by_uuid', function (request, response, next) {
+  let uuid = request.body.uuid;
+
+  let target = db.get('session').find({ uuid: uuid }).value()
+  response.send({ "user_name": target.user_name })
+})
+
+/**
+ * 가공된 데이터를 특정 테이블에 저장
  * @param {*} data  : DB에 저장하고 싶은 data
  * @param {*} table : DB의 저장하고 싶은 table 
  */
@@ -90,7 +119,24 @@ function push_data(data, table) {
     .write()
 }
 
+/**
+ * DB 에서 데이터를 삭제하는 구문
+ * @param {string} type 검색할 key 값 
+ * @param {*} key 삭제를 원하는 id
+ * @param {*} table 삭제를 원하는 테이블
+ */
+function remove_session_data(key, table) {
+  db.get(table)
+    .remove({
+      uuid: key
+    })
+    .write()
+}
 
+/**
+ * account 테이블에서 id로 이름을 찾아줌
+ * @param {*} id 찾고자 하는 id
+ */
 function find_name_by_id(id) {
   let target = db.get('accounts')
     .find({ id: id })
@@ -139,5 +185,25 @@ function check_password(input_id, input_password) {
   }
   return false;
 }
+
+setInterval(() => {
+  let session_table = db.get('session').map('expire_time')
+    .value()
+  // console.log(session_table)
+  console.log("check interval");
+
+  let now = new Date();
+
+  session_table.reduce((pre, cur) => {
+    let expire_time = new Date(cur);
+
+    if (now > expire_time) {
+      db.get('session').remove({ expire_time: cur })
+        .write()
+    }
+  }, [])
+
+}, 60000);
+
 
 module.exports = router;

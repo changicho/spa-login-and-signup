@@ -17,6 +17,30 @@ observer.observe(document.querySelector('main'), config);
  * 이벤트를 할당해주는 함수
  */
 function load_login_script() {
+  let error_message = document.querySelector('.check_message')
+
+  console.log('event bind')
+
+  document.querySelector('#submit_axios').addEventListener('click', () => {
+    console.log('send axios')
+    axios({
+      url: "api/check_confidentiality",
+      method: "post",
+      data: {
+        id: document.forms[0].id.value,
+        password: document.forms[0].password.value
+      }
+    }).then(res => {
+      if (res.data.result) {
+        console.log(res)
+
+        window.location.href = "/";
+      } else {
+        error_message.style.color = "red";
+        error_message.innerHTML = "아이디와 비밀번호를 확인해주세요"
+      }
+    });
+  });
   // console.log('scripts of login');
 }
 load_login_script();

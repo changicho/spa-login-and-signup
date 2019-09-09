@@ -13,7 +13,6 @@ import class_private from "./components/signup/class_private.js"
 let observer = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutation) {
     if (mutation.addedNodes[0].id === 'component_signup') {
-      console.log('current is signup');
       load_signup_script();
     }
   })
