@@ -4,3 +4,4 @@ test_version/
 js/module
 node_modules/
 dbsetting.js
+signup_json_template.json
