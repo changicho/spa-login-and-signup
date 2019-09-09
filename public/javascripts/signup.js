@@ -8,8 +8,10 @@ import class_signup_button from "./components/signup/class_signup_button.js"
 import class_birthdate from "./components/signup/class_birthdate.js"
 import class_private from "./components/signup/class_private.js"
 
-// 페이지가 새로 로딩되었는지 확인.
-// SPA 페이지 이동시 이벤트를 할당해주기 위함
+/**
+ * 페이지가 새로 로딩되었는지 확인.
+ * SPA 페이지 이동시 이벤트를 할당해주기 위함
+ */
 let observer = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutation) {
     if (mutation.addedNodes[0].id === 'component_signup') {
@@ -17,11 +19,17 @@ let observer = new MutationObserver(function (mutations) {
     }
   })
 })
-// 바뀌는것을 감지할 인자들.
-// childList가 바뀌는지 확인한다.
+
+/**
+ * 바뀌는것을 감지할 인자 설정. childList가 바뀌는지 확인한다.
+ */
 let config = {
   childList: true,
 };
+
+/**
+ * 옵저버 패턴, 관찰 시작
+ */
 observer.observe(document.querySelector('main'), config);
 
 /**
@@ -39,4 +47,8 @@ function load_signup_script() {
   new class_birthdate(data)
   new class_private(data)
 }
+
+/**
+ * js 로딩 시 load_signup_script 함수를 한번 실행
+ */
 load_signup_script();

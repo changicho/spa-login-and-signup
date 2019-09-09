@@ -1,4 +1,6 @@
-/* 초기화 담당 class */
+/**
+ * 초기화 담당 class
+ */
 class class_reset {
   constructor(data) {
     this.data = data
@@ -10,6 +12,9 @@ class class_reset {
 
     this.fillEventListener()
   }
+  /**
+   * 이벤트 바인딩
+   */
   fillEventListener() {
     this.button_show.onclick = () => {
       this.modal.style.display = "block"

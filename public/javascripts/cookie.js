@@ -14,7 +14,7 @@ if (cookies.length > 2) {
     url: "api/get_username_by_uuid",
     method: "post",
     data: {
-      uuid : uuid
+      uuid: uuid
     }
   }).then(res => {
     p_user_name.innerText = res.data.user_name;
@@ -26,17 +26,17 @@ if (cookies.length > 2) {
   div_login_message.style.display = "none";
 }
 
-function toLogoutApi(){
+function toLogoutApi() {
   axios({
     url: "api/logout",
     method: "post",
     data: {
-      uuid : cookies[2].split("=")[1]
+      uuid: cookies[2].split("=")[1]
     }
   }).then(res => {
     if (res.data) {
       location.href = "/login"
-    }else{
+    } else {
       console.log('check fail!')
     }
   });

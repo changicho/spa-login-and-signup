@@ -13,6 +13,20 @@
         "interest2",
         "interest3"
       ]
+    },
+    {
+      "id": "admin",
+      "password": "v0AMKhy8LFU2rsQgGIZO21c47Wm/VIigF6GurSH4iK4FoTwvMN4ASkpvpO7euMjWL3lxKk+EiefspAjlezbCUA==",
+      "name": "관리자",
+      "birthdate": "2000.11.30",
+      "gender": "female",
+      "email": "exam@domain.com",
+      "phone": "010-4444-8888",
+      "interest": [
+        "1",
+        "2",
+        "3"
+      ]
     }
   ],
   "session": []

@@ -1,3 +1,6 @@
+/**
+ * 회원 가입 페이지의 data들을 관리하는 class
+ */
 class class_data_signup {
   constructor() {
     this.database_id_list = []
@@ -15,9 +18,13 @@ class class_data_signup {
       phone: '연락처를 확인해주세요.',
       interest: '관심사를 확인해주세요.'
     }
-    this.readDataFromDatabase()
+
     this.initial()
   }
+  /**
+   * 각 항목이 유효성 검사를 통과했는지 boolean 값
+   * 처음엔 전부 false 로 설정
+   */
   initial() {
     this.id = false
     this.password = false
@@ -35,8 +42,10 @@ class class_data_signup {
       current.remove()
     }, [])
   }
-  // 정보 제출 시 확인하는 부분
-  // return : list
+  /**
+   * 정보 제출 시 확인하는 부분
+   * return : 경고 메시지 list
+   */
   checkAllFilled() {
     let error_message = []
     if (!this.id) {
@@ -65,7 +74,9 @@ class class_data_signup {
     }
     return error_message
   }
-  // 초기화 버튼
+  /**
+   * 페이지 전부 초기화
+   */
   clearAll() {
     this.initial()
     this.checkbox_terms.checked = false
@@ -73,6 +84,9 @@ class class_data_signup {
       current.innerText = ''
     }, [])
   }
+  /**
+   * 각 항목의 boolean 값 출력
+   */
   showCheckedData() {
     console.log(`
 id:    ${this.id}
@@ -85,9 +99,6 @@ phone:    ${this.phone}
 interest:    ${this.interest}
 interest_count:    ${this.interest_count}
   `)
-  }
-  readDataFromDatabase() {
-    this.database_id_list = ['admin']
   }
 }
 

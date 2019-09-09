@@ -1,4 +1,6 @@
-/* 가입하기 버튼 class */
+/**
+ * 가입하기 버튼 class
+ */
 class class_signup_button {
   constructor(data) {
     this.data = data
@@ -13,6 +15,9 @@ class class_signup_button {
 
     this.fillEventListener()
   }
+  /**
+   * 이벤트 바인딩
+   */
   fillEventListener() {
     this.button_show.onclick = () => {
       let error_message = this.data.checkAllFilled()
@@ -41,6 +46,10 @@ class class_signup_button {
       }
     }
   }
+  /**
+   * 모달 창에 경고 메시지들을 출력
+   * @param {*} alerts 경고 메시지 내용
+   */
   fillErrorMessage(alerts) {
     let error_box = document.createElement('ul')
     alerts.reduce((previous, current) => {
@@ -51,11 +60,18 @@ class class_signup_button {
 
     this.alert_box.appendChild(error_box)
   }
+  /**
+   * 모달 창 닫기
+   */
   closeModal() {
     this.modal.style.display = "none"
     this.alert_box.querySelector('ul').remove()
   }
-  // 유효성을 통과함.
+  /**
+   * 서버에 데이터 저장을 요청
+   * form의 데이터를 json으로 전송
+   * 전송 방식은 axios, post
+   */
   sendDataToServer() {
     axios({
       url: "api/store_account_data",

@@ -1,4 +1,6 @@
-/* 약관 담당 class */
+/**
+ * ???? class
+ */
 class class_terms {
   constructor(data) {
     this.data = data
@@ -12,6 +14,9 @@ class class_terms {
 
     this.fillEventListener()
   }
+  /**
+   * ??? ???
+   */
   fillEventListener() {
     this.button_show.onclick = () => {
       this.modal_terms.style.display = "block"
@@ -46,6 +51,9 @@ class class_terms {
       }
     })
   }
+  /**
+   * ???? ?? ???? ???? ??
+   */
   setAgree() {
     this.checkbox.checked = true
   }

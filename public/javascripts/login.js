@@ -19,8 +19,6 @@ observer.observe(document.querySelector('main'), config);
 function load_login_script() {
   let error_message = document.querySelector('.check_message')
 
-  console.log('event bind')
-
   document.querySelector('#submit_axios').addEventListener('click', () => {
     console.log('send axios')
     axios({

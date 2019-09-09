@@ -13,7 +13,9 @@ const uuidv1 = require('uuid/v1');
 // SHA512 암호화 사용하기 위한 추가
 const crypto = require('crypto');
 
-// post 방식으로 온 데이터를 echo 하는 test URL
+/**
+ * post 방식으로 온 데이터를 echo 하는 test URL
+ */
 router.post('/check_data', function (request, response, next) {
   // console.log(`method : POST, data = ${request.body}`);
   if (request.body.status === "ok") {
@@ -23,7 +25,9 @@ router.post('/check_data', function (request, response, next) {
   }
 })
 
-// get 방식으로 온 데이터를 echo 하는 test URL
+/**
+ * get 방식으로 온 데이터를 echo 하는 test URL
+ */
 router.get('/check_data', function (request, response, next) {
   console.log('method : GET')
   console.log(request.body);
@@ -36,8 +40,6 @@ router.get('/check_data', function (request, response, next) {
  * id, pw가 올바를 경우 sessio에 저장
  */
 router.post('/check_confidentiality', function (request, response, next) {
-  // if 문 구조 바꿈
-  console.log('request')
   if (!check_password(request.body.id, request.body.password)) {
     response.send({ result: false });
     return;
@@ -71,6 +73,9 @@ router.post('/store_account_data', function (request, response, next) {
   response.send({ "store": true })
 })
 
+/**
+ * 회원가입 시 이미 존재하는 아이디인지 확인
+ */
 router.post('/check_exist_id', function (request, response, next) {
   let target = db.get('accounts')
     .find({ id: request.body.id })
@@ -81,7 +86,6 @@ router.post('/check_exist_id', function (request, response, next) {
   } else {
     response.send({ "exist": true })
   }
-
 })
 
 /**
@@ -110,8 +114,8 @@ router.post('/get_username_by_uuid', function (request, response, next) {
 
 /**
  * 가공된 데이터를 특정 테이블에 저장
- * @param {*} data  : DB에 저장하고 싶은 data
- * @param {*} table : DB의 저장하고 싶은 table 
+ * @param {*} data DB에 저장하고 싶은 data
+ * @param {*} table DB의 저장하고 싶은 table 
  */
 function push_data(data, table) {
   db.get(table)
@@ -146,8 +150,9 @@ function find_name_by_id(id) {
 }
 
 /**
- * 
- * @param {*} requst_body : post로 넘어온 회원가입 정보를 DB에 저장할 수 있도록 가공해줌 
+ * 계정 정보를 table 에 맞도록 가공해주는 함수
+ * post로 날아온 form 태그의 정로를 가공
+ * @param {*} requst_body : post로 넘어온 회원가입 정보
  */
 function make_account(requst_body) {
   let password_sha512 = crypto.createHash('sha512').update(requst_body.password).digest('base64');
@@ -165,7 +170,7 @@ function make_account(requst_body) {
 }
 
 /**
- * 
+ * 로그인 시 아이디와 비밀번호를 확인
  * @param {*} input_id 입력한 ID값
  * @param {*} input_password 입력한 password 값
  */
@@ -186,11 +191,15 @@ function check_password(input_id, input_password) {
   return false;
 }
 
+/**
+ * 특정 시간마다 session 에서 만료된 시간인 정보를 초기화
+ * 1분마다
+ */
 setInterval(() => {
-  let session_table = db.get('session').map('expire_time')
+  let session_table = db.get('session')
+    .map('expire_time')
     .value()
-  // console.log(session_table)
-  console.log("check interval");
+  // console.log("check interval");
 
   let now = new Date();
 
@@ -202,7 +211,6 @@ setInterval(() => {
         .write()
     }
   }, [])
-
 }, 60000);
 
 

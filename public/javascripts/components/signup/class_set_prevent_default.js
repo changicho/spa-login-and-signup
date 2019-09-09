@@ -1,3 +1,6 @@
+/**
+ * 엔터키 동작을 막는 class
+ */
 class class_set_prevent_default {
   constructor() {
     document.addEventListener('keydown', function (event) {
