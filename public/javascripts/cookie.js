@@ -2,7 +2,7 @@ let cookies = document.cookie.split("; ");
 let navigation_menu_list = document.querySelectorAll('nav ul li')
 let div_login_message = document.querySelector("#onlogin")
 
-if (cookies.length > 2) {
+if (find_uuid(cookies)) {
   div_login_message.style.display = "flex";
 
   let p_user_name = document.querySelector("#user_name")
@@ -24,6 +24,23 @@ if (cookies.length > 2) {
 } else {
   navigation_menu_list[1].innerHTML = '<a href="/login">Login</a>'
   div_login_message.style.display = "none";
+}
+
+function find_uuid(cookies){
+  console.log(cookies)
+  let uuid = undefined
+  cookies.reduce((pre,cur)=>{
+    if(cur===""){
+      return
+    }
+    
+    let type = cur.split('=')[0];
+    if(type==='uuid'){
+      uuid = cur.split('=')[1];
+    }
+  },[])
+
+  return uuid;
 }
 
 function toLogoutApi() {
