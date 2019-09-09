@@ -33,9 +33,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 
+// 쿠키 예제
+app.get('/set_cookie', function (req, res) {
+  // var visitors = req.cookies.visitors || 0
+  // visitors ++;
+
+  let json = {
+    id: "hello",
+    pass: "word"
+  }
+  res.cookie('visitors', json, {
+    maxAge: 5000
+  });
+
+  res.send('visitors: ' + json);
+});
+
+// 쿠키 예제
+app.get('/get_cookie', function (req, res) {
+  var visitors = req.cookies.visitors;
+  res.send('Visitors: ' + visitors.id);
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
+  // 404 페이지로 return
+  res.render('404error');
 });
 
 // error handler
