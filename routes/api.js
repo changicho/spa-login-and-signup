@@ -32,9 +32,18 @@ router.get('/check_data', function (request, response, next) {
  * id 정보와 pw 정보 전부 왔을 경우에만 실행
  */
 router.post('/check_confidentiality', function (request, response, next) {
-  console.log(request.body);
+  // console.log(request.body);
 
   if (check_password(request.body.id, request.body.password)) {
+    let user_name = find_name_by_id(request.body.id);
+
+    response.cookie('user_id', request.body.id, {
+      maxAge: 50000
+    });
+    response.cookie('user_name', user_name, {
+      maxAge: 50000
+    });
+
     response.redirect('/')
   } else {
     response.send(false);
@@ -43,10 +52,9 @@ router.post('/check_confidentiality', function (request, response, next) {
 
 router.post('/store_account_data', function (request, response, next) {
   let new_account = make_account(request.body)
-  // response.send(new_account)
   push_data(new_account, 'accounts');
-  // response.redirect('/')
-  response.send({"store" : true})
+
+  response.send({ "store": true })
 })
 
 router.post('/check_exist_id', function (request, response, next) {
@@ -62,6 +70,15 @@ router.post('/check_exist_id', function (request, response, next) {
 
 })
 
+router.post('/logout', function (request, response, next) {
+  // db에서 뭔 작업
+  console.log(request.body)
+  response.clearCookie('user_id');
+  response.clearCookie('user_name');
+  
+  response.send({"data" : true})
+})
+
 /**
  * 
  * @param {*} data  : DB에 저장하고 싶은 data
@@ -73,6 +90,14 @@ function push_data(data, table) {
     .write()
 }
 
+
+function find_name_by_id(id) {
+  let target = db.get('accounts')
+    .find({ id: id })
+    .value()
+
+  return target.name;
+}
 
 /**
  * 

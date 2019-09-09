@@ -1,32 +1,32 @@
 <html>
+  <head>
+    <script src="javascripts/spa_router.js" defer></script>
+    <title>메인 페이지</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module"></script>
+  </head>
 
-<head>
-  <script src="javascripts/spa_router.js" defer></script>
-  <title>메인 페이지</title>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script type="module"></script>
-</head>
+  <body>
+    <nav>
+      <ul id="navigation">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">signup</a></li>
+      </ul>
+      <div id="onlogin" class = "hidden"><p>안녕하세요! </p><p id="user_name"></p><p>님!</p></div>
+    </nav>
 
-<body>
-  <nav>
-    <ul id="navigation">
-      <li><a href="/">Home</a></li>
-      <li><a href="/login">Login</a></li>
-      <li><a href="/signup">signup</a></li>
-    </ul>
-  </nav>
+    <main class="app-root">Loading...</main>
 
-  <main class="app-root">Loading...</main>
+    <footer>
+      <div class="container_footer">
+        <p>made by chan</p>
+        <p>email : changicho29@gmail.com</p>
+      </div>
+    </footer>
+  </body>
 
-  <footer>
-    <div class="container_footer">
-      <p>made by chan</p>
-      <p>email : changicho29@gmail.com</p>
-    </div>
-  </footer>
-</body>
-
-<link rel="stylesheet" href="stylesheets/reset.css">
-<link rel="stylesheet" href="stylesheets/index.css">
-
+  <script src="javascripts/cookie.js"></script>
+  <link rel="stylesheet" href="stylesheets/reset.css" />
+  <link rel="stylesheet" href="stylesheets/index.css" />
 </html>

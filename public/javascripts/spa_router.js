@@ -27,7 +27,6 @@ const Routing = {
         }
       )
     },
-
     '/signup': () => {
       Routing.get('/views/signup.html').then(
         res => {
@@ -37,8 +36,7 @@ const Routing = {
       )
     },
     otherwise(path) {
-      title.innerText = "page not found"
-      renderHtml(`${path} Not Found`)
+      console.log("notfound");
     }
   }, router: function (path) {
     (this.routes[path] || this.routes.otherwise)(path);
