@@ -48,7 +48,7 @@ function toLogoutApi() {
     url: "api/logout",
     method: "post",
     data: {
-      uuid: cookies[2].split("=")[1]
+      uuid: find_uuid(cookies)
     }
   }).then(res => {
     if (res.data) {
