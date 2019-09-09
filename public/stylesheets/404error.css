@@ -1,0 +1,26 @@
+.main_background {
+  background-color:gray;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  min-height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main_background h1, .main_background h2{
+  margin : 10px;
+  max-width: 400px;
+}
+
+.main_background h1{
+  font-size:3em;
+  color:white;
+}
+
+.main_background h2{
+  margin:10px;
+  color:black;
+}
