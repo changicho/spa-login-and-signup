@@ -41,9 +41,12 @@ router.get('/check_data', function (request, response, next) {
  */
 router.post('/check_confidentiality', function (request, response, next) {
   if (!check_password(request.body.id, request.body.password)) {
+    console.log('error check password')
+
     response.send({ result: false });
     return;
   }
+  console.log('pass check password')
 
   let user_name = find_name_by_id(request.body.id);
   let uuid = uuidv1();
@@ -70,6 +73,22 @@ router.post('/store_account_data', function (request, response, next) {
   let new_account = make_account(request.body)
   push_data(new_account, 'accounts');
 
+  let user_name = new_account.name;
+  let uuid = uuidv1();
+  let expire_time = new Date();
+  expire_time.setMinutes(expire_time.getMinutes() + 1)
+
+  let data = {
+    "uuid": uuid,
+    "user_name": user_name,
+    "expire_time": expire_time
+  }
+  push_data(data, 'session')
+
+  response.cookie('uuid', uuid, {
+    maxAge: 50000
+  });
+
   response.send({ "store": true })
 })
 
@@ -93,7 +112,6 @@ router.post('/check_exist_id', function (request, response, next) {
  * 데이터베이스에서 현재 uuid 의 값을 삭제
  */
 router.post('/logout', function (request, response, next) {
-  // db에서 뭔 작업
   let uuid = request.body.uuid;
 
   remove_session_data(uuid, 'session')
