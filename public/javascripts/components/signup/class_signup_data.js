@@ -16,7 +16,8 @@ class class_data_signup {
       gender: '성별을 입력해주세요.',
       email: '이메일을 확인해주세요.',
       phone: '연락처를 확인해주세요.',
-      interest: '관심사를 확인해주세요.'
+      interest: '관심사를 확인해주세요.',
+      term : '약관에 동의해주세요. '
     }
 
     this.initial()
@@ -36,6 +37,7 @@ class class_data_signup {
     this.interest = false
     this.interest_count = 0
     this.interest_list = []
+    this.term = false;
 
     let interest_tags = document.querySelector('#interest').querySelectorAll('.interest_tag')
     Array.from(interest_tags).reduce((previous, current) => {
@@ -71,6 +73,9 @@ class class_data_signup {
     }
     if (!this.interest) {
       error_message.push(this.error_messages.interest)
+    }
+    if(!this.checkbox_terms.checked){
+      error_message.push(this.error_messages.term)
     }
     return error_message
   }

@@ -89,11 +89,24 @@ class class_signup_button {
         interests_string: this.form.interests_string.value
       }
     }).then(res => {
-      // console.log(res);
       if (res.data.store) {
-        window.location.href = '/'
+        axios({
+          url: "api/check_confidentiality",
+          method: "post",
+          data: {
+            id: document.forms[0].id.value,
+            password: document.forms[0].password.value
+          }
+        }).then(res => {
+          if (res.data.result) {
+            console.log(res)
+    
+            window.location.href = "/";
+          }
+        });
+
       } else {
-        console.log('there are error on store')
+        // console.log('there are error on store')
       }
     })
     window.location.href = '/'

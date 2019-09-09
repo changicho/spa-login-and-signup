@@ -7,9 +7,9 @@ if (find_uuid(cookies)) {
 
   let p_user_name = document.querySelector("#user_name")
   let uuid = find_uuid(cookies);
-  
-  navigation_menu_list[1].innerHTML = '<a onclick="toLogoutApi()">Logout</a>'
 
+  navigation_menu_list[1].innerHTML = '<a onclick="toLogoutApi()">Logout</a>'
+  navigation_menu_list[2].style.display="none",
   axios({
     url: "api/get_username_by_uuid",
     method: "post",
@@ -24,10 +24,10 @@ if (find_uuid(cookies)) {
 } else {
   navigation_menu_list[1].innerHTML = '<a href="/login">Login</a>'
   div_login_message.style.display = "none";
+  navigation_menu_list[2].style.display="flex";
 }
 
 function find_uuid(cookies){
-  console.log(cookies)
   let uuid = undefined
   cookies.reduce((pre,cur)=>{
     if(cur===""){
