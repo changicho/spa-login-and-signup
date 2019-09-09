@@ -6,8 +6,8 @@ if (find_uuid(cookies)) {
   div_login_message.style.display = "flex";
 
   let p_user_name = document.querySelector("#user_name")
-  let uuid = cookies[2].split("=")[1];
-
+  let uuid = find_uuid(cookies);
+  
   navigation_menu_list[1].innerHTML = '<a onclick="toLogoutApi()">Logout</a>'
 
   axios({
@@ -33,7 +33,7 @@ function find_uuid(cookies){
     if(cur===""){
       return
     }
-    
+
     let type = cur.split('=')[0];
     if(type==='uuid'){
       uuid = cur.split('=')[1];
