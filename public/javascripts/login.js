@@ -26,7 +26,7 @@ function load_login_script() {
       method: "post",
       data: {
         id: document.forms[0].id.value,
-        password: document.forms[0].password.value
+        password: sha512(document.forms[0].password.value)
       }
     }).then(res => {
       if (res.data.result) {

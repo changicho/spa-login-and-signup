@@ -78,7 +78,7 @@ class class_signup_button {
       method: "post",
       data: {
         id: this.form.id.value,
-        password: this.form.password.value,
+        password: sha512(this.form.password.value),
         name: this.form.name.value,
         year: this.form.year.value,
         month: this.form.month.value,

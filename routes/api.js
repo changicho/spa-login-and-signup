@@ -11,13 +11,14 @@ const db = low(adapter)
 const uuidv1 = require('uuid/v1');
 
 // SHA512 암호화 사용하기 위한 추가
-const crypto = require('crypto');
+// Set some defaults (required if your JSON file is empty)
+db.defaults({ accounts: [], session: [] })
+  .write();
 
 /**
  * post 방식으로 온 데이터를 echo 하는 test URL
  */
 router.post('/check_data', function (request, response, next) {
-  // console.log(`method : POST, data = ${request.body}`);
   if (request.body.status === "ok") {
     response.send("ok");
   } else {
@@ -170,20 +171,21 @@ function find_name_by_id(id) {
 /**
  * 계정 정보를 table 에 맞도록 가공해주는 함수
  * post로 날아온 form 태그의 정로를 가공
- * @param {*} requst_body : post로 넘어온 회원가입 정보
+ * @param {*} reqeust_body : post로 넘어온 회원가입 정보
  */
-function make_account(requst_body) {
-  let password_sha512 = crypto.createHash('sha512').update(requst_body.password).digest('base64');
-  console.log(password_sha512)
+function make_account(reqeust_body) {
+  // let password_sha512 = crypto.createHash('sha512').update(requst_body.password).digest('HEX');
+  // console.log(password_sha512)
   return data = {
-    "id": requst_body.id,
-    "password": password_sha512,
-    "name": requst_body.name,
-    "birthdate": `${requst_body.year}.${requst_body.month}.${requst_body.day}`,
-    "gender": requst_body.gender,
-    "email": requst_body.email,
-    "phone": requst_body.phone,
-    "interest": requst_body.interests_string.split(',')
+    "id": reqeust_body.id,
+    // "password": password_sha512
+    "password": reqeust_body.password,
+    "name": reqeust_body.name,
+    "birthdate": `${reqeust_body.year}.${reqeust_body.month}.${reqeust_body.day}`,
+    "gender": reqeust_body.gender,
+    "email": reqeust_body.email,
+    "phone": reqeust_body.phone,
+    "interest": reqeust_body.interests_string.split(',')
   }
 }
 
@@ -193,7 +195,7 @@ function make_account(requst_body) {
  * @param {*} input_password 입력한 password 값
  */
 function check_password(input_id, input_password) {
-  let input_password_sha512 = crypto.createHash('sha512').update(input_password).digest('base64');
+  // let input_password_sha512 = crypto.createHash('sha512').update(input_password).digest('HEX');
 
   let target = db.get('accounts')
     .find({ id: input_id })
@@ -203,7 +205,7 @@ function check_password(input_id, input_password) {
     return false;
   }
 
-  if (input_password_sha512 === target.password) {
+  if (input_password === target.password) {
     return true;
   }
   return false;
