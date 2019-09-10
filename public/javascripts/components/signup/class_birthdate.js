@@ -29,9 +29,6 @@ class class_birthdate {
     })
 
     this.select_month.addEventListener('change', () => {
-      if (this.select_month.value === "") {
-        return
-      }
       this.checkMonthOfBirth()
     })
 
@@ -67,6 +64,14 @@ class class_birthdate {
    */
   checkMonthOfBirth() {
     this.month = this.select_month.value
+    if (this.select_month.value === "") {
+      this.showErrorMessage('올바른 월을 선택해 주세요')
+      this.check_month = false
+      
+      this.checkAll()
+
+      return
+    }
     this.check_month = true
 
     this.checkDateOfBirth()

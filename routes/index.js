@@ -21,11 +21,4 @@ router.get('/logout', function(req, res, next) {
   res.render('layout');
 });
 
-/**
- * axios 테스트용 페이지
- */
-router.get('/test', function (request, response, next) {
-  response.render('axios_test');
-});
-
 module.exports = router;
