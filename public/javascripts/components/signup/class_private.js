@@ -27,9 +27,6 @@ class class_private {
       this.checkName()
     })
     this.select_gender.addEventListener('change', () => {
-      if (this.select_gender.value === "") {
-        return
-      }
       this.checkGender()
     })
     this.input_email.addEventListener('keyup', () => {
@@ -54,6 +51,10 @@ class class_private {
    * 성별을 입력 했는지 확인
    */
   checkGender() {
+    if (this.select_gender.value === "") {
+      this.data.gender = false;
+      return
+    }
     this.data.gender = true
   }
   /**
