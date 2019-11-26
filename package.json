@@ -8,13 +8,15 @@
   "dependencies": {
     "axios": "^0.19.0",
     "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "ejs": "^2.7.1",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
+    "debug": "~4.1.1",
+    "ejs": "^3.0.1",
+    "express": "~4.17.1",
+    "http-errors": "~1.7.3",
     "jade": "~1.11.0",
     "lowdb": "^1.0.0",
     "morgan": "~1.9.1",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "constantinople": ">=3.1.1",
+    "clean-css": ">=4.1.11"
   }
 }
